@@ -1017,6 +1017,10 @@ app.get("/docs", (_req, res) => {
   res.sendFile(require("path").join(__dirname, "docs.html"));
 });
 
+app.get("/slides", (_req, res) => {
+  res.sendFile(require("path").join(__dirname, "slides.html"));
+});
+
 server = app.listen(PORT, () => {
   console.log(`🚀 Storefront Manager listening on :${PORT}`);
   console.log(`   Manifest: http://localhost:${PORT}/.well-known/agents.json`);
