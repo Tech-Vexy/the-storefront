@@ -1,3 +1,5 @@
+declare const process: any;
+
 export const KITE_CHAIN_ID = 2368;
 export const KITE_CHAIN_HEX = "0x940";
 export const KITE_NETWORK_KEY = "kite_testnet";
@@ -11,7 +13,7 @@ export const kiteTestnet = {
   nativeCurrency: { name: "Kite", symbol: "KITE", decimals: 18 },
 } as const;
 
-export const STOREFRONT_CONTRACT = "0x2aa194bef6ad273ade4530f5f34633890ee99e76";
+export const STOREFRONT_CONTRACT = "0xf307f0bfc6ebb291add5a52773fde236c4aeeba7";
 
 export const STOREFRONT_ABI = [
   "function settleOrder(string kitePassportId, string orderId) external payable",
@@ -34,7 +36,5 @@ export const STOREFRONT_ABI = [
   "event AgentTreasuryUpdated(address indexed oldAgentTreasury, address indexed newAgentTreasury)",
 ] as const;
 
-// AgentTreasury — populated after deploy-treasury.ts. Empty string means agents
-// run in pre-Treasury direct-settle mode (USE_TREASURY=false).
-export const TREASURY_CONTRACT = (process.env.TREASURY_CONTRACT ?? "").toLowerCase();
-export const USE_TREASURY = process.env.USE_TREASURY === "true";
+export const TREASURY_CONTRACT = (typeof process !== "undefined" && process.env && process.env.TREASURY_CONTRACT || "").toLowerCase();
+export const USE_TREASURY = typeof process !== "undefined" && process.env && process.env.USE_TREASURY === "true";

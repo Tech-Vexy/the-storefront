@@ -2,11 +2,11 @@
   "network": "kiteTestnet",
   "chainId": 2368,
   "attestation": {
-    "address": "0x2aa194bef6ad273ade4530f5f34633890ee99e76",
+    "address": "0xf307f0bfc6ebb291add5a52773fde236c4aeeba7",
     "deployer": "0x1b4833805b31ac3012297e0c4df7e24261cadc38",
     "treasury": "0x1b4833805b31ac3012297e0c4df7e24261cadc38",
     "policyLabel": "kite-storefront/v1",
     "policyHash": "0xb618ed137bd0b726a42905434576ba95ea5177171538c2dd2948b514d5e286ea",
-    "deployedAt": "2026-05-08T17:04:17.460Z"
+    "deployedAt": "2026-05-08T17:32:03.110Z"
   }
 }

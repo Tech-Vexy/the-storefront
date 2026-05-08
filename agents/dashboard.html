@@ -36,7 +36,6 @@
             color: var(--text);
             font-family: 'Outfit', sans-serif;
             min-height: 100vh;
-            padding: 1.5rem;
         }
 
         .dashboard {
@@ -45,6 +44,65 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(2, 6, 23, 0.8);
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, var(--accent), var(--purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.15s;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.5rem 1.2rem;
+            border-radius: 3rem;
+            font-weight: 800;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Outfit', sans-serif;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px var(--accent-glow);
         }
 
         header {
@@ -339,11 +397,23 @@
     </style>
 </head>
 <body>
+<nav>
+<div class="logo">THE STOREFRONT</div>
+<div class="nav-links">
+<a href="/">Hardware</a>
+<a href="/dashboard" style="color:var(--accent)">Swarm Dashboard</a>
+<a href="/docs">Docs</a>
+</div>
+<div style="display: flex; align-items: center; gap: 0.75rem;">
+  <div id="wallet-balance" style="display: none; align-items: center; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.25); color: #10b981; padding: 0.4rem 0.9rem; border-radius: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; box-shadow: 0 0 10px rgba(16, 185, 129, 0.05);">0.00 KITE</div>
+  <div id="connect-wallet-btn" class="btn-primary" style="cursor:pointer;" onclick="connectWallet()">CONNECT WALLET</div>
+</div>
+</nav>
+
     <div class="dashboard">
         <header>
             <div class="header-left">
                 <h1>SWARM <span style="font-weight: 300;">INTELLIGENCE</span></h1>
-                <a href="/" class="store-link" id="store-link">← Storefront</a>
             </div>
             <div class="status-pill online" id="status-pill">
                 <div class="status-dot"></div>
@@ -446,7 +516,7 @@
 
         <div class="footer">
             Storefront Swarm v1.0 · Powered by <a href="https://gokite.ai" target="_blank">Kite AI</a> ·
-            Contract <a href="https://testnet.kitescan.ai/address/0x2aa194bef6ad273ade4530f5f34633890ee99e76" target="_blank">0x2aa1...9e76</a>
+            Contract <a href="https://testnet.kitescan.ai/address/0xf307f0bfc6ebb291add5a52773fde236c4aeeba7" target="_blank">0xf307...eba7</a>
         </div>
     </div>
 
@@ -609,6 +679,75 @@
             }
         }
 
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    updateWalletUI(accounts[0]);
+                } catch (err) {
+                    console.error("Wallet connection failed:", err);
+                }
+            } else {
+                alert("No Web3 wallet detected! Please install MetaMask or a compatible Web3 browser extension.");
+            }
+        }
+
+        async function checkWalletConnection() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    if (accounts.length > 0) {
+                        updateWalletUI(accounts[0]);
+                    }
+                } catch (err) {
+                    console.error("Error checking wallet connection:", err);
+                }
+            }
+        }
+
+        async function updateWalletUI(account) {
+            const btn = document.getElementById('connect-wallet-btn');
+            const balElement = document.getElementById('wallet-balance');
+            if (account) {
+                const shortAddr = account.substring(0, 6) + '...' + account.substring(account.length - 4);
+                btn.textContent = shortAddr.toUpperCase();
+                btn.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+                btn.style.borderColor = '#10b981';
+                btn.style.color = '#fff';
+                btn.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.4)';
+                if (balElement) {
+                    try {
+                        const balanceWei = await window.ethereum.request({
+                            method: 'eth_getBalance',
+                            params: [account, 'latest']
+                        });
+                        const balanceEth = parseInt(balanceWei, 16) / 1e18;
+                        balElement.textContent = balanceEth.toFixed(2) + ' KITE';
+                        balElement.style.display = 'inline-flex';
+                    } catch (err) {
+                        console.error("Failed to fetch wallet balance:", err);
+                        balElement.style.display = 'none';
+                    }
+                }
+            } else {
+                btn.textContent = 'CONNECT WALLET';
+                btn.style.background = '';
+                btn.style.borderColor = '';
+                btn.style.color = '';
+                btn.style.boxShadow = '';
+                if (balElement) {
+                    balElement.style.display = 'none';
+                }
+            }
+        }
+
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                updateWalletUI(accounts[0]);
+            });
+        }
+
+        checkWalletConnection();
         setInterval(updateDashboard, 3000);
         updateDashboard();
     </script>

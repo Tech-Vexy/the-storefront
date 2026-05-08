@@ -1,38 +1,54 @@
-# fly.toml app configuration file for storefront-swarm
+# fly.toml app configuration file generated for storefront-swarm on 2026-05-08T20:38:26+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "storefront-swarm"
-primary_region = "bos"
+app = 'storefront-swarm'
+primary_region = 'ewr'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
 [env]
-  PORT = "8080"
-  MANAGER_REQUIRE_PREFLIGHT = "false" # Allows starting without hardblocking on transient RPC preflights
+  MANAGER_REQUIRE_PREFLIGHT = 'false'
+  PORT = '8080'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
 [[services]]
+  protocol = 'tcp'
   internal_port = 8080
-  processes = ["app"]
-  protocol = "tcp"
+  processes = ['app']
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
 
   [services.concurrency]
+    type = 'connections'
     hard_limit = 25
     soft_limit = 20
-    type = "connections"
-
-  [[services.ports]]
-    force_https = true
-    handlers = ["http"]
-    port = 80
-
-  [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 443
 
   [[services.http_checks]]
-    interval = "10s"
-    grace_period = "15s"
-    method = "get"
-    path = "/readyz"
-    protocol = "http"
-    timeout = "2s"
+    interval = '10s'
+    timeout = '2s'
+    grace_period = '15s'
+    method = 'get'
+    path = '/readyz'
+    protocol = 'http'
+
+[[vm]]
+  memory = '1gb'
+  cpus = 1
+  memory_mb = 1024

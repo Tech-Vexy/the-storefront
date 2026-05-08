@@ -44,12 +44,14 @@ if (REQUIRED_ENV.some((k) => !process.env[k])) {
 const PORT = Number(process.env.PORT || process.env.MANAGER_PORT || 5001);
 const MANAGER_URL = `http://localhost:${PORT}`;
 const RPC_URL = process.env.KITE_RPC_URL || kiteTestnet.rpc;
-const PAYEE_ADDRESS = process.env.STORE_PAYEE_ADDRESS || STOREFRONT_CONTRACT;
+const PAYEE_ADDRESS = process.env.STORE_PAYEE_ADDRESS || "0x1b4833805b31Ac3012297E0c4Df7e24261CaDC38";
 const PASSPORT_ID = process.env.KITE_PASSPORT_ID || "agp_befecc2a225a4a4cab1f47a9c20562f8";
 const ORDER_TTL_MS = 5 * 60 * 1000;
 const POLICY_LABEL = process.env.STORE_POLICY_LABEL || "kite-storefront/v1";
 const POLICY_HASH = ethers.id(POLICY_LABEL);
 const LLM_TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS || 30_000);
+
+let lastBuyerAddress = "";
 
 // No local log file anymore
 
@@ -353,6 +355,7 @@ app.post("/checkout", rateLimit(RATE_LIMIT_MAX["/checkout"]), async (req: Reques
       _type: "order",
       customerName: "Agentic Buyer",
       customerEmail: "agent@swarm.local",
+      customerWallet: lastBuyerAddress,
       items: [{
         product: { _type: "reference", _ref: product._id },
         quantity: qty,
@@ -472,6 +475,88 @@ app.get("/orders/:orderId", async (req, res) => {
   res.json(order);
 });
 
+app.get("/api/orders", async (req, res) => {
+  try {
+    const orders = await sanityClient.fetch(`
+      *[_type == "order" && (status == "fulfilled" || status == "refunded")] | order(_createdAt desc) [0...30] {
+        _id,
+        _createdAt,
+        customerName,
+        customerWallet,
+        totalAmount,
+        status,
+        agentAssisted,
+        onChainOrderId,
+        transactionHash,
+        refundTxHash,
+        items[] {
+          quantity,
+          price,
+          product-> {
+            name,
+            sku
+          }
+        }
+      }
+    `);
+    res.json(orders);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post("/api/refund", async (req, res) => {
+  const { orderId } = req.body;
+  if (!orderId) return res.status(400).json(apiError("BAD_REQUEST", "orderId is required"));
+
+  const requestId = randomUUID();
+  try {
+    // 1. Fetch order from Sanity
+    const order = await sanityClient.fetch(`
+      *[_type == "order" && onChainOrderId == $orderId][0] {
+        _id,
+        status,
+        customerWallet,
+        totalAmount
+      }
+    `, { orderId });
+
+    if (!order) return res.status(404).json(apiError("NOT_FOUND", "Order not found"));
+    if (order.status !== "fulfilled") {
+      return res.status(400).json(apiError("INVALID_STATE", `Cannot refund order with status "${order.status}"`));
+    }
+    if (!order.customerWallet) {
+      return res.status(400).json(apiError("INVALID_STATE", "Order has no customer wallet address recorded for refund"));
+    }
+
+    logSwarm(`[Manager] Refund requested for order ${orderId} (Wallet: ${order.customerWallet}). Original price: ${order.totalAmount} KITE`, requestId);
+
+    // 2. Compute 90% refund (retaining 10% to cover gas & transaction processing costs)
+    const refundAmount = Number(order.totalAmount) * 0.9;
+    const refundWei = kiteToWei(refundAmount.toFixed(4));
+
+    logSwarm(`[Manager] Initiating 90% refund of ${refundAmount} KITE to customer (retaining 10% overhead)...`, requestId);
+
+    // 3. Perform on-chain transfer of the refund amount in KITE back to user's wallet
+    const tx = await wallet.sendTransaction({
+      to: order.customerWallet,
+      value: refundWei
+    });
+    await tx.wait();
+    logSwarm(`[Manager] Refund transaction confirmed on-chain: ${tx.hash}`, requestId);
+
+    // 4. Update order status in Sanity to "refunded"
+    await sanityClient.patch(order._id).set({ status: "refunded", refundTxHash: tx.hash }).commit();
+    logSwarm(`[Manager] ✅ Order ${orderId} successfully marked as refunded in Sanity database`, requestId);
+
+    res.json({ success: true, refundAmount, txHash: tx.hash });
+  } catch (err: any) {
+    console.error("[Manager] Refund execution failed:", err);
+    logSwarm(`[Manager] ❌ Refund failed: ${err.message}`, requestId);
+    res.status(500).json(apiError("INTERNAL_ERROR", err.message));
+  }
+});
+
 app.post("/log", (req, res) => {
   const { message } = req.body ?? {};
   if (typeof message === "string") logSwarm(message);
@@ -554,6 +639,45 @@ async function preflight() {
     }
     logSwarm(`[Manager] MANAGER_REQUIRE_PREFLIGHT=false — serving anyway.`);
   }
+
+  // Auto-Reset Cisco Catalyst pricing to correct seed values on startup
+  try {
+    logSwarm(`[Manager] Restoring Cisco Catalyst prices to catalog seed values...`);
+    const prod1 = await sanityClient.fetch(`*[_type == "product" && sku == "CIS-CATALY-791"][0]`);
+    if (prod1) {
+      await sanityClient.patch(prod1._id).set({ price: 0.029 }).commit();
+      logSwarm(`[Manager] ✅ Restored CIS-CATALY-791 (${prod1.name}) to 0.029 KITE`);
+    }
+    const prod2 = await sanityClient.fetch(`*[_type == "product" && sku == "CIS-CATALY-580"][0]`);
+    if (prod2) {
+      await sanityClient.patch(prod2._id).set({ price: 0.117 }).commit();
+      logSwarm(`[Manager] ✅ Restored CIS-CATALY-580 (${prod2.name}) to 0.117 KITE`);
+    }
+  } catch (err: any) {
+    logSwarm(`[Manager] ⚠️ Startup price restore failed: ${err.message || err}`);
+  }
+
+  // Auto-Initialize storeStats in Sanity if missing, syncing with on-chain volume
+  try {
+    const stats = await sanityClient.fetch(`*[_type == "storeStats"][0]`);
+    if (!stats) {
+      logSwarm(`[Manager] storeStats table missing in Sanity. Fetching on-chain baseline...`);
+      let initialVolumeWei = "0";
+      try {
+        const [_, totalVolume] = await storefront.getStats();
+        initialVolumeWei = totalVolume.toString();
+      } catch { /* fallback to 0 */ }
+
+      await sanityClient.create({
+        _type: "storeStats",
+        totalRevenueWei: initialVolumeWei,
+      });
+      logSwarm(`[Manager] ✅ Initialized storeStats in Sanity with on-chain volume: ${initialVolumeWei} Wei`);
+    }
+  } catch (err: any) {
+    logSwarm(`[Manager] ⚠️ storeStats initialization failed: ${err.message || err}`);
+  }
+
   preflightReady = true;
   logSwarm(`[Manager] ✅ Preflight complete; settlement endpoints enabled.`);
 }
@@ -612,13 +736,14 @@ app.post("/broadcast", (req, res) => {
 // Agentic Web Buy - A specialized endpoint for the storefront that simulates
 // a Buyer Agent performing a transaction on behalf of the customer.
 app.post("/api/web-buy", async (req, res) => {
-  const { sku, quantity } = req.body;
+  const { sku, quantity, buyerAddress } = req.body;
+  if (buyerAddress) lastBuyerAddress = buyerAddress;
   const requestId = randomUUID();
 
   try {
     // 1. Fetch product to get latest agentic price
-    const product = await sanityClient.fetch<ProductSearchResult>(
-      `*[_type == "product" && sku == $sku][0]`, { sku }
+    const product = await sanityClient.fetch<any>(
+      `*[_type == "product" && sku == $sku][0]{ _id, name, sku, price, stock }`, { sku }
     );
     if (!product) return res.status(404).json(apiError("NOT_FOUND", "Product not found"));
 
@@ -645,11 +770,34 @@ app.post("/api/web-buy", async (req, res) => {
     );
     logSwarm(`[Agentic Web] Transaction sent: ${tx.hash}. Confirmed.`, requestId);
 
-    // 3. Update Inventory/Revenue in Sanity
+    // 3. Update Inventory/Revenue in Sanity & Create Order Document
     const stats = await sanityClient.fetch(`*[_type == "storeStats"][0]`);
     if (stats) {
       const newTotal = (BigInt(stats.totalRevenueWei || "0") + totalWei).toString();
       await sanityClient.patch(stats._id).set({ totalRevenueWei: newTotal }).commit();
+    }
+
+    try {
+      await sanityClient.create({
+        _type: "order",
+        customerName: "Web Customer",
+        customerEmail: "web@customer.local",
+        customerWallet: buyerAddress || lastBuyerAddress,
+        items: [{
+          product: { _type: "reference", _ref: product._id },
+          quantity: quantity,
+          price: product.price
+        }],
+        totalAmount: product.price * quantity,
+        status: "fulfilled",
+        agentAssisted: false,
+        onChainOrderId: orderId,
+        transactionHash: tx.hash
+      });
+      // Dec stock
+      await sanityClient.patch(product._id).dec({ stock: quantity }).commit();
+    } catch (err: any) {
+      console.error("[Agentic Web] Failed to persist order or decrement stock:", err.message);
     }
 
     logSwarm(`[Agentic Web] ✅ Purchase complete for ${sku}. Total settled: ${product.price} KITE`, requestId);
@@ -671,9 +819,54 @@ app.post("/api/web-buy", async (req, res) => {
   }
 });
 
+app.post("/api/negotiate-settle", async (req, res) => {
+  const { sku, price, txHash, buyerAddress } = req.body;
+  if (!sku || !price || !txHash || !buyerAddress) {
+    return res.status(400).json(apiError("BAD_REQUEST", "Missing required fields"));
+  }
+
+  const requestId = randomUUID();
+  try {
+    const product = await sanityClient.fetch<any>(
+      `*[_type == "product" && sku == $sku][0]{ _id, name, sku, stock }`, { sku }
+    );
+    if (!product) return res.status(404).json(apiError("NOT_FOUND", "Product not found"));
+
+    const orderId = `neg-${randomUUID()}`;
+    logSwarm(`[Manager] Settlement received for negotiated deal: ${sku} at ${price} KITE. Tx: ${txHash}`, requestId);
+
+    // Persist completed order to Sanity
+    await sanityClient.create({
+      _type: "order",
+      customerName: "Negotiator Buyer",
+      customerEmail: "negotiator@swarm.local",
+      customerWallet: buyerAddress,
+      items: [{
+        product: { _type: "reference", _ref: product._id },
+        quantity: 1,
+        price: Number(price)
+      }],
+      totalAmount: Number(price),
+      status: "fulfilled",
+      agentAssisted: true,
+      onChainOrderId: orderId,
+      transactionHash: txHash
+    });
+
+    // Decrement stock
+    await sanityClient.patch(product._id).dec({ stock: 1 }).commit();
+
+    res.json({ success: true, orderId });
+  } catch (err: any) {
+    console.error("[Manager] Failed to persist negotiated settlement:", err);
+    res.status(500).json(apiError("INTERNAL_ERROR", err.message));
+  }
+});
+
 // Human-delegated agent procurement
 app.post("/api/agent-procure", async (req, res) => {
-  const { productName, quantity = 1 } = req.body;
+  const { productName, quantity = 1, buyerAddress } = req.body;
+  if (buyerAddress) lastBuyerAddress = buyerAddress;
   if (!productName) {
     return res.status(400).json(apiError("BAD_REQUEST", "Product name is required"));
   }
@@ -813,11 +1006,15 @@ app.get("/swarm-stats", async (_req, res) => {
 });
 
 app.get("/", (_req, res) => {
-  res.sendFile(require("path").join(__dirname, "storefront.html"));
+  res.sendFile(require("path").join(__dirname, "index.html"));
 });
 
 app.get("/dashboard", (_req, res) => {
-  res.sendFile(require("path").join(__dirname, "index.html"));
+  res.sendFile(require("path").join(__dirname, "dashboard.html"));
+});
+
+app.get("/docs", (_req, res) => {
+  res.sendFile(require("path").join(__dirname, "docs.html"));
 });
 
 server = app.listen(PORT, () => {
