@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swarm Intelligence Dashboard | Kite AI</title>
+    <meta name="description" content="Real-time monitoring dashboard for the Storefront Swarm autonomous agent economy on Kite AI blockchain.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020617;
+            --glass: rgba(15, 23, 42, 0.8);
+            --glass-hover: rgba(15, 23, 42, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-bright: rgba(255, 255, 255, 0.15);
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --purple: #818cf8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.08) 0px, transparent 50%);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+
+        .dashboard {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 1.5rem; }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .store-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .store-link:hover { color: var(--accent); border-color: var(--accent); }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .status-pill.online {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+        .status-pill.offline {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        .status-pill.online .status-dot { background: var(--success); box-shadow: 0 0 10px var(--success); }
+        .status-pill.offline .status-dot { background: var(--danger); box-shadow: 0 0 10px var(--danger); animation: none; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Ticker */
+        .ticker-container {
+            background: rgba(56, 189, 248, 0.06);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            padding: 0.6rem 1.25rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            overflow: hidden;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+        .ticker-label {
+            background: var(--accent);
+            color: var(--bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 800;
+            font-size: 0.65rem;
+            flex-shrink: 0;
+            letter-spacing: 0.05em;
+        }
+        .ticker-content {
+            white-space: nowrap;
+            animation: scroll 60s linear infinite;
+            flex: 1;
+            color: var(--text-dim);
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Strategy Card */
+        .strategy-card {
+            background: rgba(56, 189, 248, 0.04);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+        }
+        .strategy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .strategy-header h2 {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .strategy-status {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.1em;
+        }
+        #strategy-briefing {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr 340px;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid { grid-template-columns: 1fr 1fr; }
+            .main-grid .column:nth-child(3) { grid-column: 1 / -1; }
+        }
+        @media (max-width: 768px) {
+            .main-grid { grid-template-columns: 1fr; }
+            body { padding: 1rem; }
+            h1 { font-size: 1.3rem; }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            transition: border-color 0.3s;
+        }
+        .card:hover { border-color: var(--border-bright); }
+        .card + .card { margin-top: 1.5rem; }
+
+        .card h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+        }
+
+        /* Stats */
+        .stat-box {
+            background: rgba(255, 255, 255, 0.025);
+            padding: 1.15rem;
+            border-radius: 0.85rem;
+            border: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+        .stat-box:hover { background: rgba(255, 255, 255, 0.04); }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+        .stat-value.large { font-size: 1.6rem; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+        /* Sparkline */
+        .sparkline-container {
+            margin-top: 0.75rem;
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+        }
+        .spark-bar {
+            flex: 1;
+            background: linear-gradient(to top, rgba(56, 189, 248, 0.3), rgba(56, 189, 248, 0.7));
+            border-radius: 2px 2px 0 0;
+            min-height: 3px;
+            transition: height 0.5s ease;
+        }
+
+        /* Log List */
+        .log-list {
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .log-item {
+            padding: 0.65rem 0.85rem;
+            border-radius: 0.6rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--border);
+            line-height: 1.5;
+            animation: fadeSlideIn 0.3s ease;
+            word-break: break-word;
+        }
+        .log-item .log-time {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .log-item.manager { border-left-color: var(--accent); }
+        .log-item.supplier { border-left-color: #f472b6; }
+        .log-item.cfo { border-left-color: #fb923c; }
+        .log-item.pricing { border-left-color: #a855f7; }
+        .log-item.buyer { border-left-color: var(--success); }
+
+        .alert-economic { color: var(--accent); }
+        .alert-fraud { color: var(--danger); font-weight: 700; }
+
+        /* Reputation */
+        .rep-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            padding: 0.85rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+        }
+        .rep-row + .rep-row { margin-top: 0.6rem; }
+        .rep-header { display: flex; justify-content: space-between; align-items: center; }
+        .rep-name { font-size: 0.75rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+        .rep-score { font-size: 0.8rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .rep-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .rep-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease, background 0.3s;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem 0 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header>
+            <div class="header-left">
+                <h1>SWARM <span style="font-weight: 300;">INTELLIGENCE</span></h1>
+                <a href="/" class="store-link" id="store-link">← Storefront</a>
+            </div>
+            <div class="status-pill online" id="status-pill">
+                <div class="status-dot"></div>
+                <span id="status-text">AGENTIC ECONOMY LIVE</span>
+            </div>
+        </header>
+
+        <div id="ticker" class="ticker-container">
+            <span class="ticker-label">BROADCAST</span>
+            <div id="ticker-text" class="ticker-content">Initializing swarm communication... Monitoring Kite AI blockchain for incoming transactions...</div>
+        </div>
+
+        <div class="strategy-card">
+            <div class="strategy-header">
+                <h2>🧠 Swarm Strategic Advisor</h2>
+                <span id="briefing-status" class="strategy-status">UPDATING...</span>
+            </div>
+            <p id="strategy-briefing">Strategic advisor is analyzing recent transactions and market sentiment...</p>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Column: Treasury -->
+            <div class="column">
+                <div class="card">
+                    <h2>💳 Treasury & Cashflow</h2>
+                    <div class="stat-box" style="margin-bottom: 0.75rem;">
+                        <div class="stat-label">Total Sales Volume</div>
+                        <div id="total-revenue" class="stat-value large">0.0000 KITE</div>
+                        <div class="sparkline-container" id="revenue-sparkline"></div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-label">Wallet Capital</div>
+                            <div id="wallet-balance" class="stat-value">0.0000 KITE</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Contract Pending</div>
+                            <div id="contract-balance" class="stat-value">0.0000 KITE</div>
+                        </div>
+                    </div>
+                    <div class="stats-grid" style="margin-top: 0.75rem;">
+                        <div class="stat-box">
+                            <div class="stat-label">On-Chain Purchases</div>
+                            <div id="onchain-purchases" class="stat-value">—</div>
+                        </div>
+                        <div class="stat-box">
+                            <div id="treasury-box" style="display:none">
+                                <div class="stat-label">Treasury Balance</div>
+                                <div id="treasury-balance" class="stat-value">—</div>
+                            </div>
+                            <div id="volume-box">
+                                <div class="stat-label">On-Chain Volume</div>
+                                <div id="onchain-volume" class="stat-value">—</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📊 Dynamic Pricing</h2>
+                    <div id="pricing-log" class="log-list" style="height: 320px;">
+                        <div class="log-item">Pricing agent monitoring demand...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Column: Swarm Activity -->
+            <div class="column">
+                <div class="card">
+                    <h2>🛰️ Swarm Activity Stream</h2>
+                    <div id="activity-stream" class="log-list" style="height: 580px;">
+                        <div class="log-item">Synchronizing activity...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Reputation & Security -->
+            <div class="column">
+                <div class="card">
+                    <h2>📈 Reputation Matrix</h2>
+                    <div id="reputation-list">
+                        <div class="rep-row">
+                            <div class="rep-header">
+                                <span class="rep-name">Loading...</span>
+                                <span class="rep-score" style="color: var(--text-muted);">—</span>
+                            </div>
+                            <div class="rep-bar-bg"><div class="rep-bar-fill" style="width:0%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🛡️ Security Alerts</h2>
+                    <div id="security-alerts" class="log-list" style="height: 320px;">
+                        <div class="log-item">Network secure. Watching for fraud...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Storefront Swarm v1.0 · Powered by <a href="https://gokite.ai" target="_blank">Kite AI</a> ·
+            Contract <a href="https://testnet.kitescan.ai/address/0x2aa194bef6ad273ade4530f5f34633890ee99e76" target="_blank">0x2aa1...9e76</a>
+        </div>
+    </div>
+
+    <script>
+        const revenueHistory = [];
+        let lastFetchOk = true;
+
+        function timeAgo(iso) {
+            const diff = Date.now() - new Date(iso).getTime();
+            if (diff < 60000) return `${Math.floor(diff / 1000)}s ago`;
+            if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
+            if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
+            return `${Math.floor(diff / 86400000)}d ago`;
+        }
+
+        function extractTimestamp(logStr) {
+            const m = logStr.match(/^\[([^\]]+)\]/);
+            return m ? m[1] : null;
+        }
+
+        function classifyLog(logStr) {
+            const lower = logStr.toLowerCase();
+            if (lower.includes('buyer') || lower.includes('purchase')) return 'buyer';
+            if (lower.includes('scam') || lower.includes('fraud')) return 'supplier';
+            if (lower.includes('cfo') || lower.includes('restock') || lower.includes('treasury')) return 'cfo';
+            if (lower.includes('pricing') || lower.includes('demand') || lower.includes('discount')) return 'pricing';
+            return 'manager';
+        }
+
+        function repColor(score) {
+            if (score >= 80) return 'var(--success)';
+            if (score >= 50) return 'var(--warning)';
+            return 'var(--danger)';
+        }
+
+        function renderSparkline(container, data) {
+            if (!data.length) return;
+            const max = Math.max(...data, 0.0001);
+            container.innerHTML = data.map(v => {
+                const h = Math.max(3, (v / max) * 38);
+                return `<div class="spark-bar" style="height:${h}px"></div>`;
+            }).join('');
+        }
+
+        function setConnectionStatus(ok) {
+            const pill = document.getElementById('status-pill');
+            const text = document.getElementById('status-text');
+            if (ok) {
+                pill.className = 'status-pill online';
+                text.textContent = 'AGENTIC ECONOMY LIVE';
+            } else {
+                pill.className = 'status-pill offline';
+                text.textContent = 'DISCONNECTED';
+            }
+        }
+
+        async function updateDashboard() {
+            try {
+                const res = await fetch('/swarm-stats');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+
+                if (!lastFetchOk) setConnectionStatus(true);
+                lastFetchOk = true;
+
+                // Revenue
+                const rev = parseFloat(data.revenue) || 0;
+                document.getElementById('total-revenue').textContent = `${rev.toFixed(4)} KITE`;
+                document.getElementById('wallet-balance').textContent = `${parseFloat(data.walletBalance || 0).toFixed(4)} KITE`;
+                document.getElementById('contract-balance').textContent = `${parseFloat(data.contractBalance || 0).toFixed(4)} KITE`;
+
+                // On-chain stats
+                if (data.onChain) {
+                    document.getElementById('onchain-purchases').textContent = data.onChain.totalPurchases;
+                    document.getElementById('onchain-volume').textContent = `${parseFloat(data.onChain.totalVolume || 0).toFixed(4)} KITE`;
+                }
+
+                // Treasury
+                if (data.treasury) {
+                    const tBox = document.getElementById('treasury-box');
+                    const vBox = document.getElementById('volume-box');
+                    tBox.style.display = 'block';
+                    vBox.style.display = 'none';
+                    document.getElementById('treasury-balance').textContent = `${parseFloat(data.treasury.balance || 0).toFixed(4)} KITE`;
+                }
+
+                // Sparkline
+                revenueHistory.push(rev);
+                if (revenueHistory.length > 20) revenueHistory.shift();
+                renderSparkline(document.getElementById('revenue-sparkline'), revenueHistory);
+
+                // Briefing (async, don't block)
+                fetch('/api/briefing')
+                    .then(r => r.json())
+                    .then(b => {
+                        document.getElementById('strategy-briefing').textContent = b.briefing;
+                        document.getElementById('briefing-status').textContent = 'STRATEGY UPDATED';
+                    }).catch(() => {});
+
+                // Reputation
+                const repList = document.getElementById('reputation-list');
+                const repEntries = Object.entries(data.reputation || {});
+                if (repEntries.length > 0) {
+                    repList.innerHTML = repEntries.map(([id, rep]) => {
+                        const c = repColor(rep.score);
+                        return `<div class="rep-row">
+                            <div class="rep-header">
+                                <span class="rep-name">${id}</span>
+                                <span class="rep-score" style="color:${c}">${rep.score}/100</span>
+                            </div>
+                            <div class="rep-bar-bg">
+                                <div class="rep-bar-fill" style="width:${rep.score}%;background:${c}"></div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                }
+
+                // Activity Stream
+                const stream = document.getElementById('activity-stream');
+                if (data.logs && data.logs.length > 0) {
+                    stream.innerHTML = data.logs.map(log => {
+                        const ts = extractTimestamp(log);
+                        const relTime = ts ? timeAgo(ts) : '';
+                        const type = classifyLog(log);
+                        const msgText = log.replace(/^\[[^\]]+\]\s*/, '').replace(/^\[[^\]]+\]\s*/, '');
+                        return `<div class="log-item ${type}">
+                            ${relTime ? `<span class="log-time">${relTime}</span>` : ''}
+                            ${msgText}
+                        </div>`;
+                    }).join('');
+                }
+
+                // Alerts & Pricing
+                const tickerText = document.getElementById('ticker-text');
+                const pricingLog = document.getElementById('pricing-log');
+                const securityLog = document.getElementById('security-alerts');
+
+                if (data.alerts && data.alerts.length > 0) {
+                    tickerText.textContent = data.alerts.map(a => `[${a.agent}] ${a.message}`).join(' • ');
+
+                    const econ = data.alerts.filter(a => a.type === 'economic');
+                    if (econ.length > 0) {
+                        pricingLog.innerHTML = econ.map(a =>
+                            `<div class="log-item alert-economic">${a.message}</div>`
+                        ).join('');
+                    }
+
+                    const sec = data.alerts.filter(a => a.type === 'security' || a.type === 'fraud');
+                    if (sec.length > 0) {
+                        securityLog.innerHTML = sec.map(a =>
+                            `<div class="log-item alert-fraud">${a.message}</div>`
+                        ).join('');
+                    }
+                }
+
+            } catch (e) {
+                console.error("Sync failed:", e);
+                if (lastFetchOk) setConnectionStatus(false);
+                lastFetchOk = false;
+            }
+        }
+
+        setInterval(updateDashboard, 3000);
+        updateDashboard();
+    </script>
+</body>
+</html>

@@ -1,616 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swarm Intelligence Dashboard | Kite AI</title>
-    <meta name="description" content="Real-time monitoring dashboard for the Storefront Swarm autonomous agent economy on Kite AI blockchain.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #020617;
-            --glass: rgba(15, 23, 42, 0.8);
-            --glass-hover: rgba(15, 23, 42, 0.95);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-bright: rgba(255, 255, 255, 0.15);
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
-            --purple: #818cf8;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --text: #f8fafc;
-            --text-dim: #94a3b8;
-            --text-muted: #64748b;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.08) 0px, transparent 50%);
-            color: var(--text);
-            font-family: 'Outfit', sans-serif;
-            min-height: 100vh;
-            padding: 1.5rem;
-        }
-
-        .dashboard {
-            max-width: 1600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 0.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .header-left { display: flex; align-items: center; gap: 1.5rem; }
-
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .store-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.4rem 0.8rem;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            transition: all 0.2s;
-        }
-        .store-link:hover { color: var(--accent); border-color: var(--accent); }
-
-        .status-pill {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.45rem 1rem;
-            border-radius: 2rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            transition: all 0.3s;
-        }
-        .status-pill.online {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: var(--success);
-        }
-        .status-pill.offline {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: var(--danger);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        .status-pill.online .status-dot { background: var(--success); box-shadow: 0 0 10px var(--success); }
-        .status-pill.offline .status-dot { background: var(--danger); box-shadow: 0 0 10px var(--danger); animation: none; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* Ticker */
-        .ticker-container {
-            background: rgba(56, 189, 248, 0.06);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            padding: 0.6rem 1.25rem;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            overflow: hidden;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-        }
-        .ticker-label {
-            background: var(--accent);
-            color: var(--bg);
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.25rem;
-            font-weight: 800;
-            font-size: 0.65rem;
-            flex-shrink: 0;
-            letter-spacing: 0.05em;
-        }
-        .ticker-content {
-            white-space: nowrap;
-            animation: scroll 60s linear infinite;
-            flex: 1;
-            color: var(--text-dim);
-        }
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Strategy Card */
-        .strategy-card {
-            background: rgba(56, 189, 248, 0.04);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-        }
-        .strategy-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .strategy-header h2 {
-            font-size: 0.9rem;
-            color: var(--accent);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .strategy-status {
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.1em;
-        }
-        #strategy-briefing {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            line-height: 1.7;
-            font-style: italic;
-        }
-
-        /* Main Grid */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 340px 1fr 340px;
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 1200px) {
-            .main-grid { grid-template-columns: 1fr 1fr; }
-            .main-grid .column:nth-child(3) { grid-column: 1 / -1; }
-        }
-        @media (max-width: 768px) {
-            .main-grid { grid-template-columns: 1fr; }
-            body { padding: 1rem; }
-            h1 { font-size: 1.3rem; }
-        }
-
-        /* Cards */
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            border-radius: 1.25rem;
-            padding: 1.5rem;
-            transition: border-color 0.3s;
-        }
-        .card:hover { border-color: var(--border-bright); }
-        .card + .card { margin-top: 1.5rem; }
-
-        .card h2 {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 700;
-        }
-
-        /* Stats */
-        .stat-box {
-            background: rgba(255, 255, 255, 0.025);
-            padding: 1.15rem;
-            border-radius: 0.85rem;
-            border: 1px solid var(--border);
-            transition: background 0.2s;
-        }
-        .stat-box:hover { background: rgba(255, 255, 255, 0.04); }
-        .stat-label { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
-        .stat-value.large { font-size: 1.6rem; }
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-
-        /* Sparkline */
-        .sparkline-container {
-            margin-top: 0.75rem;
-            height: 40px;
-            display: flex;
-            align-items: flex-end;
-            gap: 2px;
-        }
-        .spark-bar {
-            flex: 1;
-            background: linear-gradient(to top, rgba(56, 189, 248, 0.3), rgba(56, 189, 248, 0.7));
-            border-radius: 2px 2px 0 0;
-            min-height: 3px;
-            transition: height 0.5s ease;
-        }
-
-        /* Log List */
-        .log-list {
-            overflow-y: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-        }
-
-        .log-item {
-            padding: 0.65rem 0.85rem;
-            border-radius: 0.6rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid var(--border);
-            line-height: 1.5;
-            animation: fadeSlideIn 0.3s ease;
-            word-break: break-word;
-        }
-        .log-item .log-time {
-            font-size: 0.6rem;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 0.2rem;
-        }
-
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .log-item.manager { border-left-color: var(--accent); }
-        .log-item.supplier { border-left-color: #f472b6; }
-        .log-item.cfo { border-left-color: #fb923c; }
-        .log-item.pricing { border-left-color: #a855f7; }
-        .log-item.buyer { border-left-color: var(--success); }
-
-        .alert-economic { color: var(--accent); }
-        .alert-fraud { color: var(--danger); font-weight: 700; }
-
-        /* Reputation */
-        .rep-row {
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
-            padding: 0.85rem;
-            border-radius: 0.75rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-        }
-        .rep-row + .rep-row { margin-top: 0.6rem; }
-        .rep-header { display: flex; justify-content: space-between; align-items: center; }
-        .rep-name { font-size: 0.75rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
-        .rep-score { font-size: 0.8rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-        .rep-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .rep-bar-fill {
-            height: 100%;
-            border-radius: 3px;
-            transition: width 0.8s ease, background 0.3s;
-        }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-
-        .footer {
-            text-align: center;
-            padding: 1.5rem 0 0.5rem;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-        .footer a { color: var(--accent); text-decoration: none; }
-        .footer a:hover { text-decoration: underline; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axonics | Autonomous Hardware Exchange</title>
+<meta name="description" content="The first autonomous hardware exchange powered by Kite AI agent swarm. Negotiate with AI, settle on-chain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030712;--glass:rgba(17,24,39,0.7);--glass-h:rgba(17,24,39,0.92);--border:rgba(255,255,255,0.08);--accent:#38bdf8;--accent-g:rgba(56,189,248,0.4);--purple:#818cf8;--text:#f8fafc;--dim:#94a3b8;--muted:#64748b;--ok:#10b981;--warn:#f59e0b;--danger:#ef4444}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);background-image:radial-gradient(circle at 0% 0%,rgba(56,189,248,0.1) 0%,transparent 40%),radial-gradient(circle at 100% 100%,rgba(129,140,248,0.1) 0%,transparent 40%);color:var(--text);font-family:'Outfit',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4rem;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;background:rgba(3,7,18,0.8)}
+.logo{font-size:1.5rem;font-weight:800;letter-spacing:-0.05em;background:linear-gradient(to right,var(--accent),var(--purple));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2rem;font-size:0.85rem;font-weight:600;color:var(--dim)}
+.nav-links a:hover{color:var(--accent)}
+.btn-primary{background:var(--accent);color:var(--bg);padding:0.8rem 1.8rem;border-radius:3rem;font-weight:800;font-size:0.85rem;border:none;cursor:pointer;box-shadow:0 0 20px var(--accent-g);transition:all 0.2s;display:inline-flex;align-items:center;gap:0.5rem}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 0 35px var(--accent-g)}
+.hero{padding:6rem 4rem 3rem;text-align:center;max-width:900px;margin:0 auto}
+.hero h1{font-size:clamp(2.5rem,7vw,4rem);font-weight:800;line-height:0.95;letter-spacing:-0.04em;margin-bottom:1.5rem}
+.hero p{color:var(--dim);font-size:1.15rem;line-height:1.6;margin-bottom:2.5rem}
+.search-wrap{max-width:600px;margin:0 auto 1rem;position:relative}
+.search-wrap input{width:100%;padding:1rem 1.5rem 1rem 3rem;border-radius:2rem;border:1px solid var(--border);background:var(--glass);color:var(--text);font-family:inherit;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+.search-wrap input:focus{border-color:var(--accent)}
+.search-wrap::before{content:'🔍';position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);font-size:1rem}
+.ticker{background:rgba(56,189,248,0.05);padding:0.75rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;font-family:'JetBrains Mono';font-size:0.75rem;color:var(--dim)}
+.ticker-inner{display:inline-block;animation:marquee 40s linear infinite}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.shop{padding:3rem 4rem;max-width:1400px;margin:0 auto}
+.section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.section-header h2{font-size:1.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.5rem}
+.skeleton-card{background:var(--glass);border:1px solid var(--border);border-radius:1.5rem;padding:1.5rem;height:380px}
+.skeleton-card .sk{background:rgba(255,255,255,0.04);border-radius:0.75rem;animation:shimmer 1.5s infinite}
+@keyframes shimmer{0%,100%{opacity:0.4}50%{opacity:0.8}}
+.card{background:var(--glass);border:1px solid var(--border);border-radius:1.5rem;padding:1.5rem;position:relative;overflow:hidden;backdrop-filter:blur(10px);transition:all 0.25s}
+.card:hover{border-color:rgba(56,189,248,0.3);transform:translateY(-4px);background:var(--glass-h)}
+.card-img{width:100%;height:180px;border-radius:1rem;margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
+.card h3{font-size:1.25rem;margin-bottom:0.3rem;font-weight:700}
+.card .sku{font-family:'JetBrains Mono';font-size:0.7rem;color:var(--muted);margin-bottom:0.75rem}
+.card .price{font-size:1.4rem;font-weight:800;color:var(--accent);margin-bottom:0.5rem;font-family:'JetBrains Mono'}
+.card .stock{font-size:0.7rem;font-weight:700;margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.6rem;border-radius:1rem}
+.stock.in{background:rgba(16,185,129,0.1);color:var(--ok)}
+.stock.low{background:rgba(245,158,11,0.1);color:var(--warn)}
+.stock.out{background:rgba(239,68,68,0.1);color:var(--danger)}
+.badge{position:absolute;top:1rem;right:1rem;padding:0.2rem 0.6rem;border-radius:0.75rem;font-size:0.65rem;font-weight:700}
+.badge.active{background:rgba(16,185,129,0.1);color:var(--ok)}
+.badge.preorder{background:rgba(129,140,248,0.1);color:var(--purple)}
+.badge.discontinued{background:rgba(239,68,68,0.1);color:var(--danger)}
+.card-actions{display:flex;gap:0.75rem}
+.btn-card{flex:1;padding:0.7rem;border-radius:0.85rem;font-weight:700;font-size:0.8rem;text-align:center;cursor:pointer;border:1px solid var(--border);transition:all 0.2s;font-family:inherit}
+.btn-buy{background:var(--accent);color:var(--bg);border:none}
+.btn-buy:hover{box-shadow:0 0 15px var(--accent-g)}
+.btn-buy:disabled{opacity:0.4;cursor:not-allowed}
+.btn-neg{background:transparent;color:var(--text)}
+.btn-neg:hover{background:rgba(255,255,255,0.05)}
+.qty-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.qty-btn:hover{border-color:var(--accent);color:var(--accent)}
+.qty-val{font-family:'JetBrains Mono';font-size:0.9rem;min-width:24px;text-align:center}
+/* Modal */
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(2,6,23,0.92);display:none;justify-content:center;align-items:center;z-index:1000;backdrop-filter:blur(12px)}
+.modal{background:var(--glass-h);border:1px solid var(--accent);border-radius:1.5rem;padding:2.5rem;max-width:480px;width:90%;text-align:center;box-shadow:0 0 60px var(--accent-g)}
+.agent-step{display:flex;align-items:center;gap:0.85rem;margin-bottom:1.25rem;font-family:'JetBrains Mono';font-size:0.8rem;color:var(--dim);text-align:left}
+.step-icon{width:22px;height:22px;border:2px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-active{color:var(--accent)}
+.step-active .step-icon{border-color:var(--accent);border-top-color:transparent;animation:spin 1s linear infinite}
+.step-done{color:var(--ok)}
+.step-done .step-icon{background:var(--ok);border-color:var(--ok)}
+@keyframes spin{100%{transform:rotate(360deg)}}
+/* Negotiate Modal */
+.neg-chat{max-height:250px;overflow-y:auto;margin:1rem 0;text-align:left;display:flex;flex-direction:column;gap:0.5rem}
+.neg-msg{padding:0.6rem 0.9rem;border-radius:0.75rem;font-size:0.8rem;max-width:85%;line-height:1.4}
+.neg-msg.them{background:rgba(56,189,248,0.1);color:var(--accent);align-self:flex-start;border:1px solid rgba(56,189,248,0.15)}
+.neg-msg.you{background:rgba(129,140,248,0.1);color:var(--purple);align-self:flex-end;border:1px solid rgba(129,140,248,0.15)}
+.neg-input{display:flex;gap:0.5rem;margin-top:0.75rem}
+.neg-input input{flex:1;padding:0.6rem 1rem;border-radius:0.75rem;border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text);font-family:inherit;font-size:0.85rem;outline:none}
+.neg-input input:focus{border-color:var(--accent)}
+.neg-input button{padding:0.6rem 1.2rem;border-radius:0.75rem;background:var(--accent);color:var(--bg);border:none;font-weight:700;font-size:0.8rem;cursor:pointer;font-family:inherit}
+.footer{text-align:center;padding:3rem 2rem 2rem;border-top:1px solid var(--border);margin-top:3rem}
+.footer p{color:var(--muted);font-size:0.75rem;line-height:1.8}
+.footer a{color:var(--accent)}
+.footer a:hover{text-decoration:underline}
+.err-box{text-align:center;padding:3rem;color:var(--danger);font-size:0.9rem}
+@media(max-width:768px){nav{padding:1rem 1.5rem;flex-wrap:wrap;gap:0.75rem}.nav-links{gap:1rem;font-size:0.75rem}.hero{padding:3rem 1.5rem 2rem}.shop{padding:2rem 1.5rem}.grid{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <div class="dashboard">
-        <header>
-            <div class="header-left">
-                <h1>SWARM <span style="font-weight: 300;">INTELLIGENCE</span></h1>
-                <a href="/" class="store-link" id="store-link">← Storefront</a>
-            </div>
-            <div class="status-pill online" id="status-pill">
-                <div class="status-dot"></div>
-                <span id="status-text">AGENTIC ECONOMY LIVE</span>
-            </div>
-        </header>
+<div id="buy-modal" class="overlay">
+<div class="modal">
+<h2 id="bm-title" style="margin-bottom:1.5rem">Your Agent is on it!</h2>
+<div id="bm-steps">
+<div class="agent-step" id="s1"><div class="step-icon"></div><span>Initializing buyer agent...</span></div>
+<div class="agent-step" id="s2"><div class="step-icon"></div><span>Negotiating with store manager...</span></div>
+<div class="agent-step" id="s3"><div class="step-icon"></div><span>Settling on Kite blockchain...</span></div>
+<div class="agent-step" id="s4"><div class="step-icon"></div><span>Verifying receipt on-chain...</span></div>
+</div>
+<div id="bm-ok" style="display:none">
+<div style="font-size:3.5rem;margin-bottom:1rem">✨</div>
+<h2 style="margin-bottom:0.5rem">It's All Yours!</h2>
+<p style="color:var(--dim);margin-bottom:1.5rem;font-size:0.9rem">Your hardware is secured and confirmed on-chain.</p>
+<button class="btn-primary" onclick="closeModal('buy-modal')">WONDERFUL!</button>
+</div>
+</div>
+</div>
+<div id="neg-modal" class="overlay">
+<div class="modal" style="text-align:left">
+<h2 id="nm-title" style="margin-bottom:0.25rem">Negotiate</h2>
+<p id="nm-sub" style="color:var(--dim);font-size:0.8rem;margin-bottom:0.75rem"></p>
+<div id="neg-chat" class="neg-chat"></div>
+<div class="neg-input" id="neg-controls">
+<input type="number" id="neg-price" placeholder="Your offer in KITE" step="0.001" min="0">
+<button onclick="sendOffer()">OFFER</button>
+</div>
+<div id="neg-result" style="display:none;text-align:center;margin-top:1rem">
+<button class="btn-primary" onclick="closeModal('neg-modal')">CLOSE</button>
+</div>
+</div>
+</div>
 
-        <div id="ticker" class="ticker-container">
-            <span class="ticker-label">BROADCAST</span>
-            <div id="ticker-text" class="ticker-content">Initializing swarm communication... Monitoring Kite AI blockchain for incoming transactions...</div>
-        </div>
+<div id="agent-modal" class="overlay">
+<div class="modal" style="max-width: 600px; text-align: left;">
+<h2 id="am-title" style="margin-bottom:0.5rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem;">🤖 Buyer Agent Deployed</h2>
+<p id="am-sub" style="color: var(--dim); font-size: 0.8rem; margin-bottom: 1.25rem;">Deploying your procurement agent with custom instruction...</p>
+<div style="background: rgba(15,23,42,0.85); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #38bdf8; overflow-y: auto; max-height: 280px; line-height: 1.6; white-space: pre-wrap; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);" id="agent-terminal">
+Initializing autonomous buyer container...
+Running: tsx kiteBuyer.ts "[Mission]"
+</div>
+<div id="am-footer" style="text-align: right; display: none;">
+<button class="btn-primary" style="border-radius: 0.75rem; font-size: 0.8rem; padding: 0.6rem 1.2rem;" onclick="closeModal('agent-modal')">ACKNOWLEDGE</button>
+</div>
+</div>
+</div>
 
-        <div class="strategy-card">
-            <div class="strategy-header">
-                <h2>🧠 Swarm Strategic Advisor</h2>
-                <span id="briefing-status" class="strategy-status">UPDATING...</span>
-            </div>
-            <p id="strategy-briefing">Strategic advisor is analyzing recent transactions and market sentiment...</p>
-        </div>
+<nav>
+<div class="logo">THE STOREFRONT</div>
+<div class="nav-links">
+<a href="#">Hardware</a>
+<a href="/dashboard">Swarm Dashboard</a>
+<a href="#">Docs</a>
+</div>
+<div class="btn-primary" style="padding:0.5rem 1.2rem;font-size:0.75rem">CONNECT WALLET</div>
+</nav>
+<div class="ticker" id="ticker"><div class="ticker-inner" id="ticker-inner">Loading market data...</div></div>
+<section class="hero">
+<h1>UNLEASH THE <span style="color:var(--accent)">FUTURE.</span></h1>
+<p>The first autonomous hardware exchange powered by the Kite AI Swarm. Negotiate with agents, settle on-chain, and access next-gen compute at machine speed.</p>
+<div class="search-wrap"><input type="text" id="search-input" placeholder="Search hardware... (e.g. GPU, Antminer, keyboard)" oninput="debounceSearch()"></div>
 
-        <div class="main-grid">
-            <!-- Left Column: Treasury -->
-            <div class="column">
-                <div class="card">
-                    <h2>💳 Treasury & Cashflow</h2>
-                    <div class="stat-box" style="margin-bottom: 0.75rem;">
-                        <div class="stat-label">Total Sales Volume</div>
-                        <div id="total-revenue" class="stat-value large">0.0000 KITE</div>
-                        <div class="sparkline-container" id="revenue-sparkline"></div>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <div class="stat-label">Wallet Capital</div>
-                            <div id="wallet-balance" class="stat-value">0.0000 KITE</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="stat-label">Contract Pending</div>
-                            <div id="contract-balance" class="stat-value">0.0000 KITE</div>
-                        </div>
-                    </div>
-                    <div class="stats-grid" style="margin-top: 0.75rem;">
-                        <div class="stat-box">
-                            <div class="stat-label">On-Chain Purchases</div>
-                            <div id="onchain-purchases" class="stat-value">—</div>
-                        </div>
-                        <div class="stat-box">
-                            <div id="treasury-box" style="display:none">
-                                <div class="stat-label">Treasury Balance</div>
-                                <div id="treasury-balance" class="stat-value">—</div>
-                            </div>
-                            <div id="volume-box">
-                                <div class="stat-label">On-Chain Volume</div>
-                                <div id="onchain-volume" class="stat-value">—</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div style="background: var(--glass-h); border: 1px solid rgba(56,189,248,0.25); border-radius: 1.5rem; padding: 1.5rem; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(8px);">
+  <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em;">
+    <span>🤖</span> SOVEREIGN AGENT PROCUREMENT DELEGATION
+  </div>
+  <p style="font-size: 0.75rem; color: var(--dim); margin: 0; line-height: 1.5;">Specify any computer hardware item you wish to acquire, and deploy your autonomous buyer agent to search the catalog, negotiate prices, and settle the order on-chain.</p>
+  <div style="display: flex; gap: 0.75rem; margin-top: 0.25rem;">
+    <input type="text" id="agent-procure-input" placeholder="e.g. Bitmain Antminer S21, RTX 4090 GPU, Mechanical Keyboard" style="flex: 1; padding: 0.75rem 1rem; border-radius: 0.85rem; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text); outline: none; font-size: 0.8rem; font-family: inherit;">
+    <button class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.85rem; font-size: 0.8rem; font-weight: 700;" onclick="deployCustomAgent()">DEPLOY AGENT</button>
+  </div>
+</div>
+</section>
+<section class="shop" id="shop">
+<div class="section-header">
+<div><div style="color:var(--accent);font-weight:800;font-size:0.75rem;margin-bottom:0.4rem;letter-spacing:0.1em">LIVE MARKET</div><h2>Autonomous Inventory</h2></div>
+<div id="product-count" style="font-size:0.85rem;color:var(--dim)"></div>
+</div>
+<div class="grid" id="grid"></div>
+</section>
+<footer class="footer">
+<p>The Storefront v1.0 · Powered by <a href="https://gokite.ai" target="_blank">Kite AI</a> · Settlement via <a href="https://testnet.kitescan.ai/address/0x2aa194bef6ad273ade4530f5f34633890ee99e76" target="_blank">StorefrontAttestation</a> · Chain ID 2368</p>
+<p style="margin-top:0.4rem">Built for the Kite AI Global Hackathon 2026</p>
+</footer>
+<script type="module">
+import { createClient } from 'https://esm.sh/@sanity/client@6.15.0'
 
-                <div class="card">
-                    <h2>📊 Dynamic Pricing</h2>
-                    <div id="pricing-log" class="log-list" style="height: 320px;">
-                        <div class="log-item">Pricing agent monitoring demand...</div>
-                    </div>
-                </div>
-            </div>
+const sanityClient = createClient({
+  projectId: '75fz8bzj',
+  dataset: 'production',
+  apiVersion: '2024-04-07',
+  useCdn: true,
+})
 
-            <!-- Center Column: Swarm Activity -->
-            <div class="column">
-                <div class="card">
-                    <h2>🛰️ Swarm Activity Stream</h2>
-                    <div id="activity-stream" class="log-list" style="height: 580px;">
-                        <div class="log-item">Synchronizing activity...</div>
-                    </div>
-                </div>
-            </div>
+const quantities={};let negState={};let searchTimer=null;
+const gradients=['linear-gradient(135deg,#0f172a,#1e3a5f)','linear-gradient(135deg,#0f172a,#312e81)','linear-gradient(135deg,#0f172a,#064e3b)','linear-gradient(135deg,#0f172a,#4a1d5e)','linear-gradient(135deg,#0f172a,#7c2d12)'];
+function getIcon(n){if(n.includes('Antminer'))return'⛏️';if(n.includes('RTX')||n.includes('GPU')||n.includes('H100')||n.includes('NVIDIA'))return'🖥️';if(n.includes('Keychron')||n.includes('Keyboard'))return'⌨️';if(n.includes('SSD')||n.includes('Storage'))return'💾';if(n.includes('RAM')||n.includes('Memory'))return'🧠';return'🛰️'}
+function stockBadge(s){if(s==null)return'<span class="stock in">● Available</span>';if(s>20)return`<span class="stock in">● ${s} in stock</span>`;if(s>0)return`<span class="stock low">● ${s} left</span>`;return'<span class="stock out">● Sold out</span>'}
+function statusBadge(st){if(!st||st==='active')return'<div class="badge active">ACTIVE</div>';if(st==='preorder')return'<div class="badge preorder">PREORDER</div>';return'<div class="badge discontinued">EOL</div>'}
+function showSkeletons(){const g=document.getElementById('grid');g.innerHTML=Array(6).fill(0).map(()=>'<div class="skeleton-card"><div class="sk" style="height:160px;margin-bottom:1rem"></div><div class="sk" style="height:18px;width:70%;margin-bottom:0.5rem"></div><div class="sk" style="height:14px;width:40%;margin-bottom:0.75rem"></div><div class="sk" style="height:22px;width:35%;margin-bottom:1rem"></div><div class="sk" style="height:36px"></div></div>').join('')}
+function renderProducts(items,total){
+const g=document.getElementById('grid');
+document.getElementById('product-count').textContent=`${total||items.length} products`;
+if(!items.length){g.innerHTML='<div class="err-box">No products found. Try a different search.</div>';return}
+g.innerHTML=items.map((p,i)=>{
+quantities[p.sku]=quantities[p.sku]||1;
+const dis=p.status==='discontinued'||(p.stock!=null&&p.stock<=0);
+return`<div class="card">${statusBadge(p.status)}<div class="card-img" style="background:${gradients[i%gradients.length]}">${getIcon(p.name)}</div><h3>${p.name}</h3><div class="sku">${p.sku}</div><div class="price">${p.price} KITE</div>${stockBadge(p.stock)}<div class="qty-row"><button class="qty-btn" onclick="chgQty('${p.sku}',-1)">−</button><span class="qty-val" id="q-${p.sku}">1</span><button class="qty-btn" onclick="chgQty('${p.sku}',1)">+</button></div><div class="card-actions"><button class="btn-card btn-buy" ${dis?'disabled':''} onclick="buyProduct('${p.sku}','${p.name.replace(/'/g,"\\'")}')">BUY NOW</button><button class="btn-card btn-neg" onclick="startNeg('${p.sku}','${p.name.replace(/'/g,"\\'")}',${p.price})">NEGOTIATE</button></div><button class="btn-card" style="margin-top:0.5rem;width:100%;border-color:rgba(56,189,248,0.35);color:var(--accent);background:transparent" onclick="deployAgent('${p.name.replace(/'/g,"\\'")}')">🤖 DEPLOY DELEGATE AGENT</button></div>`}).join('')}
+function chgQty(sku,d){quantities[sku]=Math.max(1,Math.min(100,(quantities[sku]||1)+d));document.getElementById('q-'+sku).textContent=quantities[sku]}
 
-            <!-- Right Column: Reputation & Security -->
-            <div class="column">
-                <div class="card">
-                    <h2>📈 Reputation Matrix</h2>
-                    <div id="reputation-list">
-                        <div class="rep-row">
-                            <div class="rep-header">
-                                <span class="rep-name">Loading...</span>
-                                <span class="rep-score" style="color: var(--text-muted);">—</span>
-                            </div>
-                            <div class="rep-bar-bg"><div class="rep-bar-fill" style="width:0%"></div></div>
-                        </div>
-                    </div>
-                </div>
+async function loadProducts(query){
+showSkeletons();
+try{
+const filter = query ? `_type == "product" && (name match $q || machineDescription match $q)` : `_type == "product"`;
+const params = query ? { q: `*${query}*` } : {};
+const items = await sanityClient.fetch(
+  `*[${filter}] | order(name asc) {
+    name, sku, price, stock, machineDescription, hardwareSpecs, negotiationRules, status
+  }`,
+  params
+);
+renderProducts(items||[], items?.length||0);
+const t=document.getElementById('ticker-inner');
+if(items?.length){t.innerHTML=(items.map(p=>`<span style="margin-right:2.5rem">${p.sku} <span style="color:${Math.random()>0.5?'var(--ok)':'var(--danger)'}"> ${Math.random()>0.5?'▲':'▼'} ${p.price} KITE</span></span>`).join('')).repeat(3)}
+}catch(e){
+console.error("Sanity load failed, falling back to local API:", e);
+try {
+  const u=new URL('/search',location.origin);if(query)u.searchParams.set('query',query);
+  const r=await fetch(u);const d=await r.json();
+  renderProducts(d.items||[],d.pagination?.total);
+} catch(err) {
+  document.getElementById('grid').innerHTML='<div class="err-box">⚠️ Failed to load catalog from Sanity and Local API.</div>';
+}
+}}
 
-                <div class="card">
-                    <h2>🛡️ Security Alerts</h2>
-                    <div id="security-alerts" class="log-list" style="height: 320px;">
-                        <div class="log-item">Network secure. Watching for fraud...</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+function debounceSearch(){clearTimeout(searchTimer);searchTimer=setTimeout(()=>loadProducts(document.getElementById('search-input').value.trim()),350)}
+function closeModal(id){document.getElementById(id).style.display='none';if(id==='buy-modal'){for(let i=1;i<=4;i++)document.getElementById('s'+i).className='agent-step';document.getElementById('bm-steps').style.display='block';document.getElementById('bm-ok').style.display='none'}}
+async function buyProduct(sku,name){
+const m=document.getElementById('buy-modal');const steps=document.getElementById('bm-steps');const ok=document.getElementById('bm-ok');
+m.style.display='flex';steps.style.display='block';ok.style.display='none';
+document.getElementById('bm-title').textContent=`Purchasing ${name}...`;
+const setStep=(n,s)=>document.getElementById('s'+n).className='agent-step '+s;
+try{
+setStep(1,'step-active');await sleep(1200);setStep(1,'step-done');
+setStep(2,'step-active');
+const res=await fetch('/api/web-buy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sku,quantity:quantities[sku]||1})});
+const result=await res.json();if(result.error)throw new Error(result.error.message||'Purchase failed');
+setStep(2,'step-done');setStep(3,'step-active');await sleep(1500);setStep(3,'step-done');
+setStep(4,'step-active');await sleep(800);setStep(4,'step-done');
+steps.style.display='none';ok.style.display='block';document.getElementById('bm-title').textContent='Protocol Fulfilled';
+loadProducts(document.getElementById('search-input').value.trim());
+}catch(err){alert('Agent Failure: '+err.message);closeModal('buy-modal')}}
+function startNeg(sku,name,listPrice){
+negState={sku,name,listPrice,history:[],turns:0};
+document.getElementById('nm-title').textContent=`Negotiate: ${name}`;
+document.getElementById('nm-sub').textContent=`List price: ${listPrice} KITE · Max 3 rounds`;
+document.getElementById('neg-chat').innerHTML='<div class="neg-msg them">Welcome! I\'m the Store Manager. The list price is '+listPrice+' KITE. What\'s your offer?</div>';
+document.getElementById('neg-controls').style.display='flex';
+document.getElementById('neg-result').style.display='none';
+document.getElementById('neg-price').value='';
+document.getElementById('neg-modal').style.display='flex'}
+async function sendOffer(){
+const inp=document.getElementById('neg-price');const price=parseFloat(inp.value);
+if(!price||price<=0)return;inp.value='';
+const chat=document.getElementById('neg-chat');
+chat.innerHTML+=`<div class="neg-msg you">I'll offer ${price} KITE</div>`;
+negState.turns++;negState.history.push({role:'Buyer',content:`I offer ${price} KITE`});
+try{
+const r=await fetch('/negotiate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sku:negState.sku,proposedPrice:price,reason:'Best price negotiation',history:negState.history})});
+const d=await r.json();if(d.error)throw new Error(d.error.message);
+negState.history.push({role:'Sales',content:d.message||JSON.stringify(d)});
+const msg=d.message||`Counter: ${d.counterOffer||d.finalPrice} KITE`;
+chat.innerHTML+=`<div class="neg-msg them">${msg}</div>`;
+if(d.accepted){chat.innerHTML+=`<div class="neg-msg them" style="border-color:var(--ok);color:var(--ok)">✅ Deal! Final price: ${d.finalPrice} KITE</div>`;endNeg()}
+else if(negState.turns>=3){chat.innerHTML+=`<div class="neg-msg them" style="color:var(--warn)">Maximum rounds reached.</div>`;endNeg()}
+chat.scrollTop=chat.scrollHeight;
+}catch(e){chat.innerHTML+=`<div class="neg-msg them" style="color:var(--danger)">Error: ${e.message}</div>`;endNeg()}}
+function endNeg(){document.getElementById('neg-controls').style.display='none';document.getElementById('neg-result').style.display='block'}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 
-        <div class="footer">
-            Storefront Swarm v1.0 · Powered by <a href="https://gokite.ai" target="_blank">Kite AI</a> ·
-            Contract <a href="https://testnet.kitescan.ai/address/0x2aa194bef6ad273ade4530f5f34633890ee99e76" target="_blank">0x2aa1...9e76</a>
-        </div>
-    </div>
+async function deployAgent(productName) {
+  if (!productName) return;
+  const m = document.getElementById('agent-modal');
+  const term = document.getElementById('agent-terminal');
+  const title = document.getElementById('am-title');
+  const sub = document.getElementById('am-sub');
+  const footer = document.getElementById('am-footer');
+  
+  m.style.display = 'flex';
+  footer.style.display = 'none';
+  title.innerHTML = '<span>🤖</span> Agent Deployed';
+  sub.textContent = `Deploying autonomous buyer agent for "${productName}"...`;
+  
+  term.innerHTML = `[System] Initializing autonomous Hardware Buyer Agent...\n[System] Instruction: "Search for a ${productName} and purchase 1 unit at the best possible price."\n[System] Spawning container process: tsx kiteBuyer.ts ...\n\n`;
+  term.scrollTop = term.scrollHeight;
 
-    <script>
-        const revenueHistory = [];
-        let lastFetchOk = true;
+  let dotCount = 0;
+  const timer = setInterval(() => {
+    dotCount = (dotCount + 1) % 4;
+    term.innerHTML = term.innerHTML.replace(/\.*$/, '') + '.'.repeat(dotCount);
+    term.scrollTop = term.scrollHeight;
+  }, 500);
 
-        function timeAgo(iso) {
-            const diff = Date.now() - new Date(iso).getTime();
-            if (diff < 60000) return `${Math.floor(diff / 1000)}s ago`;
-            if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-            if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
-            return `${Math.floor(diff / 86400000)}d ago`;
-        }
+  try {
+    const res = await fetch('/api/agent-procure', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productName, quantity: 1 })
+    });
+    
+    clearInterval(timer);
+    const data = await res.json();
+    
+    if (data.success) {
+      title.innerHTML = '<span>✅</span> Procurement Complete!';
+      sub.textContent = `Mission fulfilled for "${productName}".`;
+      term.innerHTML = `[System] Agent returned success!\n\n[Stdout Logs]:\n${data.stdout}\n\n[Result]:\n${data.message}`;
+    } else {
+      title.innerHTML = '<span>⚠️</span> Procurement Failure';
+      sub.textContent = `Agent mission halted or failed for "${productName}".`;
+      term.innerHTML = `[System] Agent exited with an error:\n${data.error || 'Unknown error'}\n\n[Stdout Logs]:\n${data.stdout || ''}\n\n[Stderr Logs]:\n${data.stderr || ''}`;
+    }
+  } catch (err) {
+    clearInterval(timer);
+    title.innerHTML = '<span>⚠️</span> System Error';
+    sub.textContent = 'Connection to Swarm Storefront Manager lost.';
+    term.innerHTML += `\n[Fatal Client Error]: ${err.message}`;
+  } finally {
+    term.scrollTop = term.scrollHeight;
+    footer.style.display = 'block';
+    loadProducts(document.getElementById('search-input').value.trim());
+  }
+}
 
-        function extractTimestamp(logStr) {
-            const m = logStr.match(/^\[([^\]]+)\]/);
-            return m ? m[1] : null;
-        }
+async function deployCustomAgent() {
+  const inp = document.getElementById('agent-procure-input');
+  const val = inp.value.trim();
+  if (!val) {
+    alert("Please enter a hardware product name to procure!");
+    return;
+  }
+  inp.value = '';
+  await deployAgent(val);
+}
 
-        function classifyLog(logStr) {
-            const lower = logStr.toLowerCase();
-            if (lower.includes('buyer') || lower.includes('purchase')) return 'buyer';
-            if (lower.includes('scam') || lower.includes('fraud')) return 'supplier';
-            if (lower.includes('cfo') || lower.includes('restock') || lower.includes('treasury')) return 'cfo';
-            if (lower.includes('pricing') || lower.includes('demand') || lower.includes('discount')) return 'pricing';
-            return 'manager';
-        }
+// Expose handlers globally to support HTML inline attributes (like onclick) when using ES modules
+window.chgQty = chgQty;
+window.buyProduct = buyProduct;
+window.startNeg = startNeg;
+window.sendOffer = sendOffer;
+window.closeModal = closeModal;
+window.debounceSearch = debounceSearch;
+window.deployAgent = deployAgent;
+window.deployCustomAgent = deployCustomAgent;
 
-        function repColor(score) {
-            if (score >= 80) return 'var(--success)';
-            if (score >= 50) return 'var(--warning)';
-            return 'var(--danger)';
-        }
-
-        function renderSparkline(container, data) {
-            if (!data.length) return;
-            const max = Math.max(...data, 0.0001);
-            container.innerHTML = data.map(v => {
-                const h = Math.max(3, (v / max) * 38);
-                return `<div class="spark-bar" style="height:${h}px"></div>`;
-            }).join('');
-        }
-
-        function setConnectionStatus(ok) {
-            const pill = document.getElementById('status-pill');
-            const text = document.getElementById('status-text');
-            if (ok) {
-                pill.className = 'status-pill online';
-                text.textContent = 'AGENTIC ECONOMY LIVE';
-            } else {
-                pill.className = 'status-pill offline';
-                text.textContent = 'DISCONNECTED';
-            }
-        }
-
-        async function updateDashboard() {
-            try {
-                const res = await fetch('/swarm-stats');
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
-
-                if (!lastFetchOk) setConnectionStatus(true);
-                lastFetchOk = true;
-
-                // Revenue
-                const rev = parseFloat(data.revenue) || 0;
-                document.getElementById('total-revenue').textContent = `${rev.toFixed(4)} KITE`;
-                document.getElementById('wallet-balance').textContent = `${parseFloat(data.walletBalance || 0).toFixed(4)} KITE`;
-                document.getElementById('contract-balance').textContent = `${parseFloat(data.contractBalance || 0).toFixed(4)} KITE`;
-
-                // On-chain stats
-                if (data.onChain) {
-                    document.getElementById('onchain-purchases').textContent = data.onChain.totalPurchases;
-                    document.getElementById('onchain-volume').textContent = `${parseFloat(data.onChain.totalVolume || 0).toFixed(4)} KITE`;
-                }
-
-                // Treasury
-                if (data.treasury) {
-                    const tBox = document.getElementById('treasury-box');
-                    const vBox = document.getElementById('volume-box');
-                    tBox.style.display = 'block';
-                    vBox.style.display = 'none';
-                    document.getElementById('treasury-balance').textContent = `${parseFloat(data.treasury.balance || 0).toFixed(4)} KITE`;
-                }
-
-                // Sparkline
-                revenueHistory.push(rev);
-                if (revenueHistory.length > 20) revenueHistory.shift();
-                renderSparkline(document.getElementById('revenue-sparkline'), revenueHistory);
-
-                // Briefing (async, don't block)
-                fetch('/api/briefing')
-                    .then(r => r.json())
-                    .then(b => {
-                        document.getElementById('strategy-briefing').textContent = b.briefing;
-                        document.getElementById('briefing-status').textContent = 'STRATEGY UPDATED';
-                    }).catch(() => {});
-
-                // Reputation
-                const repList = document.getElementById('reputation-list');
-                const repEntries = Object.entries(data.reputation || {});
-                if (repEntries.length > 0) {
-                    repList.innerHTML = repEntries.map(([id, rep]) => {
-                        const c = repColor(rep.score);
-                        return `<div class="rep-row">
-                            <div class="rep-header">
-                                <span class="rep-name">${id}</span>
-                                <span class="rep-score" style="color:${c}">${rep.score}/100</span>
-                            </div>
-                            <div class="rep-bar-bg">
-                                <div class="rep-bar-fill" style="width:${rep.score}%;background:${c}"></div>
-                            </div>
-                        </div>`;
-                    }).join('');
-                }
-
-                // Activity Stream
-                const stream = document.getElementById('activity-stream');
-                if (data.logs && data.logs.length > 0) {
-                    stream.innerHTML = data.logs.map(log => {
-                        const ts = extractTimestamp(log);
-                        const relTime = ts ? timeAgo(ts) : '';
-                        const type = classifyLog(log);
-                        const msgText = log.replace(/^\[[^\]]+\]\s*/, '').replace(/^\[[^\]]+\]\s*/, '');
-                        return `<div class="log-item ${type}">
-                            ${relTime ? `<span class="log-time">${relTime}</span>` : ''}
-                            ${msgText}
-                        </div>`;
-                    }).join('');
-                }
-
-                // Alerts & Pricing
-                const tickerText = document.getElementById('ticker-text');
-                const pricingLog = document.getElementById('pricing-log');
-                const securityLog = document.getElementById('security-alerts');
-
-                if (data.alerts && data.alerts.length > 0) {
-                    tickerText.textContent = data.alerts.map(a => `[${a.agent}] ${a.message}`).join(' • ');
-
-                    const econ = data.alerts.filter(a => a.type === 'economic');
-                    if (econ.length > 0) {
-                        pricingLog.innerHTML = econ.map(a =>
-                            `<div class="log-item alert-economic">${a.message}</div>`
-                        ).join('');
-                    }
-
-                    const sec = data.alerts.filter(a => a.type === 'security' || a.type === 'fraud');
-                    if (sec.length > 0) {
-                        securityLog.innerHTML = sec.map(a =>
-                            `<div class="log-item alert-fraud">${a.message}</div>`
-                        ).join('');
-                    }
-                }
-
-            } catch (e) {
-                console.error("Sync failed:", e);
-                if (lastFetchOk) setConnectionStatus(false);
-                lastFetchOk = false;
-            }
-        }
-
-        setInterval(updateDashboard, 3000);
-        updateDashboard();
-    </script>
+loadProducts();
+</script>
 </body>
 </html>
