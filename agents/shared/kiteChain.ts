@@ -11,7 +11,7 @@ export const kiteTestnet = {
   nativeCurrency: { name: "Kite", symbol: "KITE", decimals: 18 },
 } as const;
 
-export const STOREFRONT_CONTRACT = "0x8ad8c56a5470ad0f10972eebe149cac55175d282";
+export const STOREFRONT_CONTRACT = "0x2aa194bef6ad273ade4530f5f34633890ee99e76";
 
 export const STOREFRONT_ABI = [
   "function settleOrder(string kitePassportId, string orderId) external payable",
@@ -23,7 +23,8 @@ export const STOREFRONT_ABI = [
   "function authenticateViaTreasury(string kitePassportId) external",
   "function setAgentTreasury(address _agentTreasury) external",
   "function agentTreasury() view returns (address)",
-  "function setStorePolicy(bytes32 _policyHash) external",
+  "function setStorePolicy(bytes32 _policyHash, string _policyCid) external",
+  "function storePolicyCid() view returns (string)",
   "function updateTreasury(address _newTreasury) external",
   "function treasury() view returns (address)",
   "function owner() view returns (address)",

@@ -35,7 +35,8 @@ if (!process.env.GROQ_API_KEY) console.warn("[Buyer] GROQ_API_KEY not set — LL
 if (!process.env.KITE_RPC_URL) console.warn("[Buyer] KITE_RPC_URL not set, using default testnet RPC");
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const MANAGER_URL = process.env.MANAGER_URL || "http://localhost:5001";
+const PORT = process.env.PORT || "5001";
+const MANAGER_URL = process.env.MANAGER_URL || `http://localhost:${PORT}`;
 const RPC_URL = process.env.KITE_RPC_URL || kiteTestnet.rpc;
 const RPC_URL_ALT = process.env.KITE_RPC_URL_ALT;
 const BUNDLER_URL = (process.env.KITE_BUNDLER_URL || `${kiteTestnet.bundler}/`)

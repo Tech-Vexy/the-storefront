@@ -40,21 +40,34 @@ describe("StorefrontAttestation", async function () {
   // ─── setStorePolicy ────────────────────────────────────────────────────────
 
   describe("setStorePolicy", async function () {
-    it("owner can set the policy hash", async function () {
+    const CID = "bafybeibwzifw7l5wlqv3xq4q3gqf6c5j7nq3a5b6c7d8e9f0g1h2i3j4k5";
+
+    it("owner can set the policy hash and CID", async function () {
       const contract = await deploy();
       const hash = keccak256(encodePacked(["string"], ["my-policy-v1"]));
-      await contract.write.setStorePolicy([hash]);
+      await contract.write.setStorePolicy([hash, CID]);
       assert.equal(await contract.read.storePolicyHash(), hash);
+      assert.equal(await contract.read.storePolicyCid(), CID);
     });
 
-    it("emits PolicyUpdated", async function () {
+    it("empty CID leaves storePolicyCid unchanged", async function () {
+      const contract = await deploy();
+      const hash1 = keccak256(encodePacked(["string"], ["v1"]));
+      const hash2 = keccak256(encodePacked(["string"], ["v2"]));
+      await contract.write.setStorePolicy([hash1, CID]);
+      await contract.write.setStorePolicy([hash2, ""]);
+      assert.equal(await contract.read.storePolicyHash(), hash2);
+      assert.equal(await contract.read.storePolicyCid(), CID);
+    });
+
+    it("emits PolicyUpdated with hash and current CID", async function () {
       const contract = await deploy();
       const hash = keccak256(encodePacked(["string"], ["my-policy-v1"]));
       await viem.assertions.emitWithArgs(
-        contract.write.setStorePolicy([hash]),
+        contract.write.setStorePolicy([hash, CID]),
         contract,
         "PolicyUpdated",
-        [hash],
+        [hash, CID],
       );
     });
 
@@ -62,7 +75,7 @@ describe("StorefrontAttestation", async function () {
       const contract = await deploy();
       const hash = keccak256(encodePacked(["string"], ["my-policy-v1"]));
       await assert.rejects(
-        contract.write.setStorePolicy([hash], { account: other.account }),
+        contract.write.setStorePolicy([hash, CID], { account: other.account }),
         /Caller is not the owner/,
       );
     });

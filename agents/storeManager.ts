@@ -41,7 +41,7 @@ if (REQUIRED_ENV.some((k) => !process.env[k])) {
 }
 
 // ─── Config ───────────────────────────────────────────────────────────────────
-const PORT = Number(process.env.MANAGER_PORT || 5001);
+const PORT = Number(process.env.PORT || process.env.MANAGER_PORT || 5001);
 const MANAGER_URL = `http://localhost:${PORT}`;
 const RPC_URL = process.env.KITE_RPC_URL || kiteTestnet.rpc;
 const PAYEE_ADDRESS = process.env.STORE_PAYEE_ADDRESS || STOREFRONT_CONTRACT;
@@ -669,6 +669,64 @@ app.post("/api/web-buy", async (req, res) => {
     logSwarm(`[Agentic Web] Failure: ${err.message}`, requestId);
     res.status(500).json(apiError("INTERNAL_ERROR", err.message));
   }
+});
+
+// Human-delegated agent procurement
+app.post("/api/agent-procure", async (req, res) => {
+  const { productName, quantity = 1 } = req.body;
+  if (!productName) {
+    return res.status(400).json(apiError("BAD_REQUEST", "Product name is required"));
+  }
+
+  const requestId = randomUUID();
+  console.log(`[Manager] Human-triggered procurement requested for: "${productName}" (Qty: ${quantity})`);
+  logSwarm(`[Manager] Sovereign delegation initialized: Deploying Buyer Agent to purchase "${productName}" (quantity: ${quantity})...`, requestId);
+
+  const { exec } = require("child_process");
+  const mission = `Search for a ${productName} and purchase ${quantity} unit(s) at the best possible price.`;
+
+  // Execute the buyer agent TSX process with a 120s timeout
+  exec(`npx tsx kiteBuyer.ts "${mission}"`, { cwd: __dirname, timeout: 120000 }, async (error: any, stdout: string, stderr: string) => {
+    if (error) {
+      console.error(`[Manager] Buyer agent execution failed:`, error);
+      logSwarm(`[Manager] Buyer agent execution failed: ${error.message}`, requestId);
+      return res.json({
+        success: false,
+        error: error.message,
+        stdout,
+        stderr
+      });
+    }
+
+    // Extract the final agent decision from stdout
+    const resultIndex = stdout.lastIndexOf("[Result]:");
+    const resultText = resultIndex !== -1 
+      ? stdout.substring(resultIndex + 9).trim() 
+      : "Procurement completed successfully. Check console logs.";
+
+    logSwarm(`[Manager] Buyer agent completed mission successfully! Final result: "${resultText.substring(0, 75)}..."`, requestId);
+
+    // Broadcast deployment completion to the dashboard feed
+    try {
+      await fetch(`${MANAGER_URL}/broadcast`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          agent: "Buyer",
+          message: `🤖 Procurement complete: ${resultText}`,
+          type: "economic"
+        })
+      });
+    } catch (broadcastErr) {
+      console.warn("[Manager] Broadcast failure:", broadcastErr);
+    }
+
+    res.json({
+      success: true,
+      message: resultText,
+      stdout
+    });
+  });
 });
 
 app.get("/api/briefing", async (_req, res) => {

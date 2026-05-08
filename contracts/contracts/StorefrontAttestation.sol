@@ -16,6 +16,10 @@ contract StorefrontAttestation {
     // Store Policy Hash: Allows agents to verify they are interacting with the correct terms.
     bytes32 public storePolicyHash;
 
+    // Store Policy CID: IPFS/IPLD CID of the canonical policy document, so agents
+    // can fetch and verify the doc rather than only the commit-to hash.
+    string public storePolicyCid;
+
     // Idempotency: Maps keccak256(orderId) to settlement status
     mapping(bytes32 => bool) public isOrderSettled;
 
@@ -33,7 +37,7 @@ contract StorefrontAttestation {
     event AgentAuthenticated(string kitePassportId, bool status);
     event TreasuryUpdated(address indexed oldTreasury, address indexed newTreasury);
     event AgentTreasuryUpdated(address indexed oldAgentTreasury, address indexed newAgentTreasury);
-    event PolicyUpdated(bytes32 newPolicyHash);
+    event PolicyUpdated(bytes32 newPolicyHash, string newPolicyCid);
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Caller is not the owner");
@@ -46,11 +50,16 @@ contract StorefrontAttestation {
     }
 
     /**
-     * @dev Sets the store policy hash for agent verification.
+     * @dev Sets the store policy hash and the IPFS CID of the canonical policy doc.
+     * Pass an empty string for `_policyCid` to leave the CID unchanged (e.g. when
+     * rotating only the hash); pass a non-empty string to update both.
      */
-    function setStorePolicy(bytes32 _policyHash) external onlyOwner {
+    function setStorePolicy(bytes32 _policyHash, string calldata _policyCid) external onlyOwner {
         storePolicyHash = _policyHash;
-        emit PolicyUpdated(_policyHash);
+        if (bytes(_policyCid).length != 0) {
+            storePolicyCid = _policyCid;
+        }
+        emit PolicyUpdated(_policyHash, storePolicyCid);
     }
 
     /**

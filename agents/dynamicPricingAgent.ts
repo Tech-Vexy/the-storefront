@@ -3,7 +3,8 @@ import { client as sanityClient } from "./sanity/client";
 
 dotenv.config();
 
-const MANAGER_URL = process.env.MANAGER_URL || "http://localhost:5001";
+const PORT = process.env.PORT || "5001";
+const MANAGER_URL = process.env.MANAGER_URL || `http://localhost:${PORT}`;
 const PRICING_INTERVAL_MS = Number(process.env.PRICING_INTERVAL_MS || 60_000);
 const PRICE_STEP = Number(process.env.PRICE_STEP || 0.01);
 

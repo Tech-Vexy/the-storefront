@@ -1,0 +1,38 @@
+# fly.toml app configuration file for storefront-swarm
+
+app = "storefront-swarm"
+primary_region = "bos"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  MANAGER_REQUIRE_PREFLIGHT = "false" # Allows starting without hardblocking on transient RPC preflights
+
+[[services]]
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.http_checks]]
+    interval = "10s"
+    grace_period = "15s"
+    method = "get"
+    path = "/readyz"
+    protocol = "http"
+    timeout = "2s"

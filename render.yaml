@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: storefront-swarm
+    env: docker
+    dockerfilePath: agents/Dockerfile
+    dockerContext: agents
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: MANAGER_REQUIRE_PREFLIGHT
+        value: "false" # Prevent hardblocking container startup on transient testnet RPC drops
+      - key: KITE_RPC_URL
+        value: https://rpc-testnet.gokite.ai
+      # Secure placeholders — user will be prompted to enter these privately on Render Dashboard
+      - key: KITE_PASSPORT_ID
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: SANITY_API_READ_TOKEN
+        sync: false
+      - key: AGENT_PRIVATE_KEY
+        sync: false
+      - key: KITE_PRIVATE_KEY
+        sync: false

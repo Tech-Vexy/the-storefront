@@ -22,6 +22,8 @@ if (!process.env.GROQ_API_KEY) console.warn("[CFO] GROQ_API_KEY not set — LLM 
 if (!process.env.KITE_RPC_URL) console.warn("[CFO] KITE_RPC_URL not set, using default testnet RPC");
 
 // ─── Config ───────────────────────────────────────────────────────────────────
+const PORT = process.env.PORT || "5001";
+const MANAGER_URL = process.env.MANAGER_URL || `http://localhost:${PORT}`;
 const RPC_URL = process.env.KITE_RPC_URL || kiteTestnet.rpc;
 
 async function getSupplierReputation(url: string) {
@@ -34,7 +36,6 @@ async function getSupplierReputation(url: string) {
   }
 }
 
-const MANAGER_URL = process.env.MANAGER_URL || "http://localhost:5001";
 const SUPPLIER_URLS = ["http://localhost:5002", "http://localhost:5003"];
 const SUPPLIER_URL = SUPPLIER_URLS[0];
 const TREASURY_PASSPORT_ID = process.env.TREASURY_PASSPORT_ID || process.env.KITE_PASSPORT_ID || "agp_treasury_default";
