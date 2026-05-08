@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnp.*
+.yarn/cache/
+.yarn/install-state.gz
+
+# Build artifacts
+dist/
+build/
+.next/
+out/
+
+# Hardhat
+contracts/cache/
+contracts/artifacts/
+contracts/typechain-types/
+contracts/ignition/deployments/
+
+# Sanity
+studio-the-storefront/dist/
+
+# Runtime logs
+*.log
+agents/manager_log.txt
+agents/supplier_log.txt
+agents/restock_log.txt
+agents/buyer_log.txt
+agents/scratch/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+**/.env
+!**/.env.example
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test/coverage
+coverage/
+.nyc_output/

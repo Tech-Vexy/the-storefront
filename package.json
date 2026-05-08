@@ -1,0 +1,11 @@
+{
+  "name": "storefront-monorepo",
+  "private": true,
+  "scripts": {
+    "install:all": "pnpm install",
+    "start:buyer": "pnpm --filter agents start:buyer",
+    "start:manager": "pnpm --filter agents start:manager",
+    "start:supplier": "pnpm --filter agents start:supplier",
+    "start:restock": "pnpm --filter agents start:restock"
+  }
+}
