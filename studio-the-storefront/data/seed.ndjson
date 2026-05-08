@@ -1,0 +1,884 @@
+{"_id":"cat-gpu","_type":"category","name":"Graphics Processing Units","slug":{"_type":"slug","current":"gpu"},"description":"High-performance compute units for LLM training and real-time rendering.","synonyms":["video card","graphics card","compute node","accelerator"]}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+']]
+]]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'
+{"_id":"cat-asic","_type":"category","name":"Application-Specific Integrated Circuits","slug":{"_type":"slug","current":"asic"},"description":"Hardware optimized for specific algorithms like SHA-256 or Ethash.","synonyms":["miner","rig","mining hardware","fixed-function compute"]}
+{"_id":"cat-cpu","_type":"category","name":"Microprocessors","slug":{"_type":"slug","current":"microprocessors"},"description":"High-performance CPUs for desktop and server compute.","synonyms":["cpu","processor","chip","silicon"]}
+{"_id":"cat-mcu","_type":"category","name":"Microcontrollers","slug":{"_type":"slug","current":"microcontrollers"},"description":"Low-power embedded controllers for IoT and robotics.","synonyms":["mcu","embedded","iot","controller"]}
+{"_id":"cat-networking","_type":"category","name":"Networking","slug":{"_type":"slug","current":"networking"},"description":"Enterprise and consumer networking gear.","synonyms":["router","switch","access point","network"]}
+{"_id":"cat-laptops","_type":"category","name":"Laptops","slug":{"_type":"slug","current":"laptops"},"description":"Portable computing devices.","synonyms":["notebook","laptop","workstation","portable"]}
+{"_id":"cat-peripherals","_type":"category","name":"Peripherals","slug":{"_type":"slug","current":"peripherals"},"description":"Input and output devices for computing systems.","synonyms":["keyboard","mouse","monitor","peripheral"]}
+{"_id":"prod-h100","_type":"product","name":"NVIDIA H100 NVL","sku":"NV-H100-NVL","slug":{"_type":"slug","current":"nvidia-h100-nvl"},"status":"active","stock":12,"price":0.1,"machineDescription":"H100 NVL is a dual-GPU PCIe card designed for LLM inference. Optimized for transformer models with 188GB HBM3 memory. FP8 Tensor Core performance is 8x faster than A100.","hardwareSpecs":[{"property":"Memory","value":"188GB HBM3"},{"property":"Bandwidth","value":"7.8 TB/s"},{"property":"TDP","value":"700W"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.05,"maxDiscountPercentage":15},"agentSalesInstructions":"Emphasize the NVLink bridge capability and massive VRAM for serving Llama-3-70B. Highlight immediate stock availability compared to GH200 lead times.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.12,-0.45,0.88,0.01,-0.23]}
+{"_id":"prod-s21","_type":"product","name":"Bitmain Antminer S21","sku":"BM-S21-200T","slug":{"_type":"slug","current":"bitmain-antminer-s21"},"status":"active","stock":50,"price":0.1,"machineDescription":"The Antminer S21 is the most efficient SHA-256 miner. 200 TH/s hashrate with an efficiency of 17.5 J/T. Built for high-density mining farms.","hardwareSpecs":[{"property":"Hashrate","value":"200 TH/s"},{"property":"Efficiency","value":"17.5 J/TH"},{"property":"Network","value":"RJ45 Ethernet"}],"negotiationRules":{"isNegotiable":false},"agentSalesInstructions":"Focus on ROI metrics for institutional miners. Note that power supplies are included in this batch.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[-0.88,0.12,-0.34,0.99,0.55]}
+{"_id":"prod-i9-14900k","_type":"product","name":"Intel Core i9-14900K","sku":"INT-I9-14900K","slug":{"_type":"slug","current":"intel-core-i9-14900k"},"status":"active","stock":45,"price":0.1,"machineDescription":"The Intel Core i9-14900K is a high-end desktop processor with 24 cores (8 P-cores and 16 E-cores). Boost clock up to 6.0 GHz. Support for DDR5 and PCIe 5.0.","hardwareSpecs":[{"property":"Cores","value":"24 (8P + 16E)"},{"property":"Threads","value":"32"},{"property":"Max Turbo Frequency","value":"6.0 GHz"},{"property":"TDP","value":"125W (253W Max)"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.05,"maxDiscountPercentage":8},"agentSalesInstructions":"Emphasize the 6GHz boost clock for gaming and single-threaded tasks. Note that it requires a high-end Z790 motherboard and substantial cooling.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.5,-0.2,0.9,-0.1,0.3]}
+{"_id":"prod-esp32-s3","_type":"product","name":"ESP32-S3-DevKitC-1","sku":"EXP-ESP32-S3","slug":{"_type":"slug","current":"esp32-s3-devkitc-1"},"status":"active","stock":150,"price":0.1,"machineDescription":"ESP32-S3 is a dual-core XTensa LX7 MCU with integrated Wi-Fi and Bluetooth 5 (LE). Includes AI acceleration instructions and 45 programmable GPIOs.","hardwareSpecs":[{"property":"Processor","value":"Dual-core 32-bit LX7"},{"property":"Connectivity","value":"Wi-Fi + BT 5.0 LE"},{"property":"SRAM","value":"512 KB"},{"property":"Flash","value":"8 MB"}],"negotiationRules":{"isNegotiable":false},"agentSalesInstructions":"Focus on the AI acceleration for edge voice and vision tasks. Mention its popularity in the maker community and robust documentation.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.3,0.8,-0.1,0.4,-0.6]}
+{"_id":"prod-udm-pro","_type":"product","name":"Ubiquiti UniFi Dream Machine Pro","sku":"UB-UDM-PRO","slug":{"_type":"slug","current":"ubiquiti-unifi-dream-machine-pro"},"status":"active","stock":25,"price":0.1,"machineDescription":"The UDM Pro is an enterprise-grade UniFi OS Console and security gateway. Features an 8-port switch, 10G SFP+ ports, and integrated 3.5\" HDD bay for UniFi Protect.","hardwareSpecs":[{"property":"Throughput","value":"3.5 Gbps (IPS/IDS)"},{"property":"Switch Ports","value":"8x 1GbE RJ45"},{"property":"WAN Ports","value":"1x 1GbE RJ45, 1x 10G SFP+"},{"property":"Rackmount","value":"1U"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.05,"maxDiscountPercentage":5},"agentSalesInstructions":"Highlight the all-in-one nature: router, switch, and NVR. Emphasize the UniFi ecosystem integration and no-subscription model.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.1,0.1,0.1,0.9,-0.2]}
+{"_id":"prod-rtx-4090","_type":"product","name":"NVIDIA GeForce RTX 4090","sku":"NV-RTX-4090-FE","slug":{"_type":"slug","current":"nvidia-geforce-rtx-4090"},"status":"active","stock":8,"price":0.1,"machineDescription":"The GeForce RTX 4090 is the ultimate GeForce GPU. It brings an enormous leap in performance, efficiency, and AI-powered graphics with DLSS 3. 24GB G6X memory.","hardwareSpecs":[{"property":"VRAM","value":"24GB GDDR6X"},{"property":"Cores","value":"16384 CUDA"},{"property":"TDP","value":"450W"},{"property":"Interface","value":"PCIe 4.0 x16"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.05,"maxDiscountPercentage":5},"agentSalesInstructions":"Focus on the 24GB VRAM for both gaming and creative workflows (rendering, AI). Mention it is the current performance king.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.9,-0.8,0.7,0.2,-0.1]}
+{"_id":"prod-framework-16","_type":"product","name":"Framework Laptop 16 (DIY)","sku":"FW-16-DIY","slug":{"_type":"slug","current":"framework-laptop-16-diy"},"status":"active","stock":15,"price":0.1,"machineDescription":"The Framework Laptop 16 is a high-performance, modular laptop. Featuring a user-replaceable GPU module, expandable I/O with Expansion Cards, and repairable design.","hardwareSpecs":[{"property":"CPU","value":"AMD Ryzen 7040 Series"},{"property":"Display","value":"16\" 2560x1600 165Hz"},{"property":"GPU","value":"Radeon RX 7700S (Modular)"},{"property":"Weight","value":"2.1kg - 2.4kg"}],"negotiationRules":{"isNegotiable":false},"agentSalesInstructions":"Emphasize repairability, modularity, and the 'right to repair' philosophy. Explain the Expansion Card system for I/O customization.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.1,0.5,0.3,0.2,0.8]}
+{"_id":"prod-keychron-q1","_type":"product","name":"Keychron Q1 Pro","sku":"KC-Q1-PRO","slug":{"_type":"slug","current":"keychron-q1-pro"},"status":"active","stock":60,"price":0.1,"machineDescription":"The Q1 Pro is a wireless QMK/VIA custom mechanical keyboard with a full aluminum body. 75% layout, gasket mount design, and hot-swappable switches.","hardwareSpecs":[{"property":"Layout","value":"75%"},{"property":"Connectivity","value":"Bluetooth 5.1 / Wired"},{"property":"Polling Rate","value":"1000Hz (Wired)"},{"property":"Body","value":"CNC Aluminum"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.05,"maxDiscountPercentage":10},"agentSalesInstructions":"Highlight the premium build quality, QMK/VIA programmability, and the gasket mount for a better typing experience. Mention the hot-swap capability for easy switch customization.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.2,0.3,-0.5,-0.4,0.9]}
+{"_id":"prod-gen-1","_type":"product","name":"NVIDIA RTX 5090","sku":"NVI-RTX509-268","slug":{"_type":"slug","current":"nvidia-rtx 5090-453"},"status":"active","stock":109,"price":0.38,"machineDescription":"High-quality NVIDIA RTX 5090 designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"NVIDIA"},{"property":"Series","value":"RTX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.304,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of NVIDIA and the performance of RTX 5090. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.6252659979673605,0.6586832899855055,-0.3773841150434949,0.774355524103191,0.8181245961165544]}
+{"_id":"prod-gen-2","_type":"product","name":"AMD RX 8900 XTX","sku":"AMD-RX8900-716","slug":{"_type":"slug","current":"amd-rx 8900 xtx-27"},"status":"active","stock":51,"price":0.145,"machineDescription":"High-quality AMD RX 8900 XTX designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"AMD"},{"property":"Series","value":"RX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.116,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of AMD and the performance of RX 8900 XTX. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.8312372721607644,-0.531763234364047,0.44635190753324006,0.012660506486054102,0.006647043297564048]}
+{"_id":"prod-gen-3","_type":"product","name":"Intel Arc Battlemage","sku":"INT-ARCBAT-819","slug":{"_type":"slug","current":"intel-arc battlemage-934"},"status":"active","stock":179,"price":0.384,"machineDescription":"High-quality Intel Arc Battlemage designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Intel"},{"property":"Series","value":"Arc"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.307,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Intel and the performance of Arc Battlemage. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.6399063296138598,-0.4192922138450461,0.4082276374240734,0.4330707280707873,-0.7880720868183073]}
+{"_id":"prod-gen-4","_type":"product","name":"Matrox A100 Tensor Core","sku":"MAT-A100TE-548","slug":{"_type":"slug","current":"matrox-a100 tensor core-868"},"status":"active","stock":84,"price":0.221,"machineDescription":"High-quality Matrox A100 Tensor Core designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Matrox"},{"property":"Series","value":"A100"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.177,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Matrox and the performance of A100 Tensor Core. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.05701237261126213,-0.6974948547345519,-0.7961952051927439,-0.7440795633732769,0.9563388235295109]}
+{"_id":"prod-gen-5","_type":"product","name":"EVGA H200 NVL","sku":"EVG-H200NV-237","slug":{"_type":"slug","current":"evga-h200 nvl-529"},"status":"active","stock":65,"price":0.404,"machineDescription":"High-quality EVGA H200 NVL designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"EVGA"},{"property":"Series","value":"H200"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.323,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of EVGA and the performance of H200 NVL. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.7051314878546557,0.14759017607544767,0.6859296852823715,-0.25811455038434117,-0.5212453114909166]}
+{"_id":"prod-gen-6","_type":"product","name":"ASUS RTX 4080 Super","sku":"ASU-RTX408-346","slug":{"_type":"slug","current":"asus-rtx 4080 super-103"},"status":"active","stock":39,"price":0.434,"machineDescription":"High-quality ASUS RTX 4080 Super designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"ASUS"},{"property":"Series","value":"RTX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.347,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of ASUS and the performance of RTX 4080 Super. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.5596276663935056,-0.9220002398220202,-0.35979065331044935,-0.8951613587121161,0.12297920245672556]}
+{"_id":"prod-gen-7","_type":"product","name":"MSI RX 7800 XT","sku":"MSI-RX7800-27","slug":{"_type":"slug","current":"msi-rx 7800 xt-442"},"status":"active","stock":190,"price":0.396,"machineDescription":"High-quality MSI RX 7800 XT designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MSI"},{"property":"Series","value":"RX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.317,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MSI and the performance of RX 7800 XT. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.4749600165591146,0.3067712543406882,0.8291079864684809,0.1999961929293057,0.8362151614289317]}
+{"_id":"prod-gen-8","_type":"product","name":"Gigabyte RTX 4060 Ti","sku":"GIG-RTX406-786","slug":{"_type":"slug","current":"gigabyte-rtx 4060 ti-49"},"status":"active","stock":64,"price":0.312,"machineDescription":"High-quality Gigabyte RTX 4060 Ti designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Gigabyte"},{"property":"Series","value":"RTX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.25,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Gigabyte and the performance of RTX 4060 Ti. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.9316594762670496,0.5913673546199039,0.7879245652160702,0.3184021782732618,-0.7802597729186436]}
+{"_id":"prod-gen-9","_type":"product","name":"Zotac RX 7600","sku":"ZOT-RX7600-799","slug":{"_type":"slug","current":"zotac-rx 7600-617"},"status":"active","stock":1,"price":0.287,"machineDescription":"High-quality Zotac RX 7600 designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Zotac"},{"property":"Series","value":"RX"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.23,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Zotac and the performance of RX 7600. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.9194352316748584,-0.5358371961389423,-0.8336646896068964,0.5825347646159378,0.5702681756989356]}
+{"_id":"prod-gen-10","_type":"product","name":"Sapphire A6000 Ada","sku":"SAP-A6000A-817","slug":{"_type":"slug","current":"sapphire-a6000 ada-802"},"status":"active","stock":43,"price":0.212,"machineDescription":"High-quality Sapphire A6000 Ada designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Sapphire"},{"property":"Series","value":"A6000"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.17,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Sapphire and the performance of A6000 Ada. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.30076836363966475,-0.43506850006536735,-0.06332459471305518,-0.28036966573720945,0.27201736826556466]}
+{"_id":"prod-gen-11","_type":"product","name":"NVIDIA RTX 5090","sku":"NVI-RTX509-9","slug":{"_type":"slug","current":"nvidia-rtx 5090-52"},"status":"active","stock":27,"price":0.144,"machineDescription":"High-quality NVIDIA RTX 5090 designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"NVIDIA"},{"property":"Series","value":"RTX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.115,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of NVIDIA and the performance of RTX 5090. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.06606730411693618,0.5199132615412008,-0.6346834639354559,0.6380799393040477,-0.9315764981572965]}
+{"_id":"prod-gen-12","_type":"product","name":"AMD RX 8900 XTX","sku":"AMD-RX8900-586","slug":{"_type":"slug","current":"amd-rx 8900 xtx-730"},"status":"active","stock":22,"price":0.274,"machineDescription":"High-quality AMD RX 8900 XTX designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"AMD"},{"property":"Series","value":"RX"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.219,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of AMD and the performance of RX 8900 XTX. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.6055440892691508,-0.49738124513715354,0.6784962808183481,0.7003808758869219,0.8176483882938264]}
+{"_id":"prod-gen-13","_type":"product","name":"Intel Arc Battlemage","sku":"INT-ARCBAT-48","slug":{"_type":"slug","current":"intel-arc battlemage-500"},"status":"preorder","stock":101,"price":0.09,"machineDescription":"High-quality Intel Arc Battlemage designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Intel"},{"property":"Series","value":"Arc"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.072,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Intel and the performance of Arc Battlemage. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.09565995651699866,0.7997068355055466,-0.5622045226199732,-0.35176049482638394,-0.008604030976002708]}
+{"_id":"prod-gen-14","_type":"product","name":"Matrox A100 Tensor Core","sku":"MAT-A100TE-593","slug":{"_type":"slug","current":"matrox-a100 tensor core-690"},"status":"active","stock":86,"price":0.125,"machineDescription":"High-quality Matrox A100 Tensor Core designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Matrox"},{"property":"Series","value":"A100"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.1,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Matrox and the performance of A100 Tensor Core. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[0.16294244761662524,-0.14813681358379815,-0.3257323060077275,0.46744406276624395,-0.4525922131349218]}
+{"_id":"prod-gen-15","_type":"product","name":"EVGA H200 NVL","sku":"EVG-H200NV-108","slug":{"_type":"slug","current":"evga-h200 nvl-947"},"status":"active","stock":142,"price":0.205,"machineDescription":"High-quality EVGA H200 NVL designed for optimal performance in gpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"EVGA"},{"property":"Series","value":"H200"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.164,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of EVGA and the performance of H200 NVL. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-gpu"}],"embeddings":[-0.8685638526045425,0.5543523663218115,-0.24733740981641472,0.6812862023581723,0.002996972766402317]}
+{"_id":"prod-gen-16","_type":"product","name":"Bitmain Antminer S21 Pro","sku":"BIT-ANTMIN-5","slug":{"_type":"slug","current":"bitmain-antminer s21 pro-52"},"status":"active","stock":122,"price":0.184,"machineDescription":"High-quality Bitmain Antminer S21 Pro designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Bitmain"},{"property":"Series","value":"Antminer"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.147,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Bitmain and the performance of Antminer S21 Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.416910616223761,0.5100547082242439,0.7204000131532924,0.6016253982576454,0.35851019326854505]}
+{"_id":"prod-gen-17","_type":"product","name":"MicroBT WhatsMiner M60S","sku":"MIC-WHATSM-582","slug":{"_type":"slug","current":"microbt-whatsminer m60s-914"},"status":"preorder","stock":160,"price":0.39,"machineDescription":"High-quality MicroBT WhatsMiner M60S designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MicroBT"},{"property":"Series","value":"WhatsMiner"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.312,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MicroBT and the performance of WhatsMiner M60S. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.3973478382011735,0.022209389646612454,-0.9919087430364351,0.29389027343336394,-0.39180090156802394]}
+{"_id":"prod-gen-18","_type":"product","name":"Canaan Avalon A1466","sku":"CAN-AVALON-750","slug":{"_type":"slug","current":"canaan-avalon a1466-739"},"status":"active","stock":134,"price":0.189,"machineDescription":"High-quality Canaan Avalon A1466 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Canaan"},{"property":"Series","value":"Avalon"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.151,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Canaan and the performance of Avalon A1466. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.162529166863995,-0.3496285426270631,-0.7718398917690468,-0.836711322024638,0.30988971746613014]}
+{"_id":"prod-gen-19","_type":"product","name":"Innosilicon KS3","sku":"INN-KS3-253","slug":{"_type":"slug","current":"innosilicon-ks3-666"},"status":"active","stock":149,"price":0.451,"machineDescription":"High-quality Innosilicon KS3 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Innosilicon"},{"property":"Series","value":"KS3"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.361,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Innosilicon and the performance of KS3. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.4443630980775404,-0.5243655663107789,-0.03921318149433328,-0.08444781306601579,-0.8886098847367467]}
+{"_id":"prod-gen-20","_type":"product","name":"Goldshell KA3","sku":"GOL-KA3-761","slug":{"_type":"slug","current":"goldshell-ka3-707"},"status":"active","stock":137,"price":0.493,"machineDescription":"High-quality Goldshell KA3 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Goldshell"},{"property":"Series","value":"KA3"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.394,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Goldshell and the performance of KA3. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.8519327751233807,0.24538951649021845,0.34040209088830076,-0.9766168091281602,-0.633483522083617]}
+{"_id":"prod-gen-21","_type":"product","name":"IceRiver L7","sku":"ICE-L7-363","slug":{"_type":"slug","current":"iceriver-l7-214"},"status":"active","stock":183,"price":0.111,"machineDescription":"High-quality IceRiver L7 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"IceRiver"},{"property":"Series","value":"L7"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.089,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of IceRiver and the performance of L7. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.9233961962498163,-0.4690363509913875,-0.47046638466101887,0.09922589036504914,0.34696421317351644]}
+{"_id":"prod-gen-22","_type":"product","name":"Jasminer K7","sku":"JAS-K7-752","slug":{"_type":"slug","current":"jasminer-k7-217"},"status":"preorder","stock":26,"price":0.365,"machineDescription":"High-quality Jasminer K7 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Jasminer"},{"property":"Series","value":"K7"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.292,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Jasminer and the performance of K7. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.6718680180631074,0.20751787434208158,-0.9344779783165451,-0.9412177601677629,-0.36571565379166904]}
+{"_id":"prod-gen-23","_type":"product","name":"Ibelink D9","sku":"IBE-D9-420","slug":{"_type":"slug","current":"ibelink-d9-627"},"status":"active","stock":58,"price":0.265,"machineDescription":"High-quality Ibelink D9 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Ibelink"},{"property":"Series","value":"D9"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.212,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Ibelink and the performance of D9. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.07870790476569822,-0.7949784546429111,-0.31594806198530656,0.1357938915632757,0.05049043949352794]}
+{"_id":"prod-gen-24","_type":"product","name":"StrongU E9 Pro","sku":"STR-E9PRO-649","slug":{"_type":"slug","current":"strongu-e9 pro-236"},"status":"preorder","stock":191,"price":0.355,"machineDescription":"High-quality StrongU E9 Pro designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"StrongU"},{"property":"Series","value":"E9"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.284,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of StrongU and the performance of E9 Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[-0.1828384667815095,0.07212057637771174,0.5616500734171022,0.9774679427594788,-0.6368107604596922]}
+{"_id":"prod-gen-25","_type":"product","name":"Ebang Z15 Pro","sku":"EBA-Z15PRO-505","slug":{"_type":"slug","current":"ebang-z15 pro-901"},"status":"active","stock":25,"price":0.193,"machineDescription":"High-quality Ebang Z15 Pro designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Ebang"},{"property":"Series","value":"Z15"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.154,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Ebang and the performance of Z15 Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.09668177398626998,-0.21557604839924394,0.24575745266563542,-0.09200035114981642,-0.2491780413867366]}
+{"_id":"prod-gen-26","_type":"product","name":"Bitmain Antminer S21 Pro","sku":"BIT-ANTMIN-20","slug":{"_type":"slug","current":"bitmain-antminer s21 pro-276"},"status":"active","stock":38,"price":0.386,"machineDescription":"High-quality Bitmain Antminer S21 Pro designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Bitmain"},{"property":"Series","value":"Antminer"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.309,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Bitmain and the performance of Antminer S21 Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.8684962753911232,0.11566158562096884,-0.8876339350638398,0.7734161338919703,0.7624840857612931]}
+{"_id":"prod-gen-27","_type":"product","name":"MicroBT WhatsMiner M60S","sku":"MIC-WHATSM-44","slug":{"_type":"slug","current":"microbt-whatsminer m60s-356"},"status":"active","stock":38,"price":0.289,"machineDescription":"High-quality MicroBT WhatsMiner M60S designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MicroBT"},{"property":"Series","value":"WhatsMiner"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.231,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MicroBT and the performance of WhatsMiner M60S. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[-0.03884354830433634,-0.420552460011574,0.14780727380723424,0.36425744590678244,-0.5515272570075114]}
+{"_id":"prod-gen-28","_type":"product","name":"Canaan Avalon A1466","sku":"CAN-AVALON-812","slug":{"_type":"slug","current":"canaan-avalon a1466-688"},"status":"active","stock":85,"price":0.216,"machineDescription":"High-quality Canaan Avalon A1466 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Canaan"},{"property":"Series","value":"Avalon"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.173,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Canaan and the performance of Avalon A1466. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.22730210316358557,-0.8631140258582988,-0.9501610892034529,0.6777140510793576,-0.34985744588633194]}
+{"_id":"prod-gen-29","_type":"product","name":"Innosilicon KS3","sku":"INN-KS3-46","slug":{"_type":"slug","current":"innosilicon-ks3-779"},"status":"active","stock":123,"price":0.413,"machineDescription":"High-quality Innosilicon KS3 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Innosilicon"},{"property":"Series","value":"KS3"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.33,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Innosilicon and the performance of KS3. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[-0.8786958321338669,0.4679054394717592,-0.5362883664491378,-0.07598663217177748,-0.5982240452951173]}
+{"_id":"prod-gen-30","_type":"product","name":"Goldshell KA3","sku":"GOL-KA3-916","slug":{"_type":"slug","current":"goldshell-ka3-14"},"status":"active","stock":55,"price":0.235,"machineDescription":"High-quality Goldshell KA3 designed for optimal performance in asic workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Goldshell"},{"property":"Series","value":"KA3"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.188,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Goldshell and the performance of KA3. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-asic"}],"embeddings":[0.23035475886906154,-0.7415944288990013,0.32615067606179826,0.4084795088471529,0.5972091718834796]}
+{"_id":"prod-gen-31","_type":"product","name":"Intel Core i9-15900K","sku":"INT-COREI9-35","slug":{"_type":"slug","current":"intel-core i9-15900k-487"},"status":"active","stock":185,"price":0.326,"machineDescription":"High-quality Intel Core i9-15900K designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Intel"},{"property":"Series","value":"Core"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.261,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Intel and the performance of Core i9-15900K. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.14487794204344384,0.13148316447243613,-0.3495082099816882,-0.31463132409622685,0.7360100399706699]}
+{"_id":"prod-gen-32","_type":"product","name":"AMD Ryzen 9 9950X","sku":"AMD-RYZEN9-414","slug":{"_type":"slug","current":"amd-ryzen 9 9950x-572"},"status":"active","stock":102,"price":0.223,"machineDescription":"High-quality AMD Ryzen 9 9950X designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"AMD"},{"property":"Series","value":"Ryzen"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.178,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of AMD and the performance of Ryzen 9 9950X. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.8508562517244016,0.5638302451556791,-0.42938314172661607,-0.2114110236786284,0.1974386467927527]}
+{"_id":"prod-gen-33","_type":"product","name":"Apple M3 Max","sku":"APP-M3MAX-800","slug":{"_type":"slug","current":"apple-m3 max-278"},"status":"active","stock":84,"price":0.185,"machineDescription":"High-quality Apple M3 Max designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Apple"},{"property":"Series","value":"M3"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.148,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Apple and the performance of M3 Max. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.10666103825123918,-0.10011272763715007,-0.2867401486547845,0.13205378550878133,0.35502824825674417]}
+{"_id":"prod-gen-34","_type":"product","name":"Qualcomm Snapdragon X Elite","sku":"QUA-SNAPDR-563","slug":{"_type":"slug","current":"qualcomm-snapdragon x elite-642"},"status":"preorder","stock":142,"price":0.158,"machineDescription":"High-quality Qualcomm Snapdragon X Elite designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Qualcomm"},{"property":"Series","value":"Snapdragon"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.126,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Qualcomm and the performance of Snapdragon X Elite. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.24683414215911315,-0.19064086659100177,-0.9829678481302395,-0.19791769691220895,0.3530315847190162]}
+{"_id":"prod-gen-35","_type":"product","name":"MediaTek EPYC 9654","sku":"MED-EPYC96-519","slug":{"_type":"slug","current":"mediatek-epyc 9654-404"},"status":"active","stock":177,"price":0.223,"machineDescription":"High-quality MediaTek EPYC 9654 designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MediaTek"},{"property":"Series","value":"EPYC"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.178,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MediaTek and the performance of EPYC 9654. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.9195003388712379,0.8373389198996353,-0.918401221809755,0.3517976518341457,-0.436333417120111]}
+{"_id":"prod-gen-36","_type":"product","name":"IBM Xeon Platinum 8490H","sku":"IBM-XEONPL-724","slug":{"_type":"slug","current":"ibm-xeon platinum 8490h-622"},"status":"active","stock":23,"price":0.298,"machineDescription":"High-quality IBM Xeon Platinum 8490H designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"IBM"},{"property":"Series","value":"Xeon"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.238,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of IBM and the performance of Xeon Platinum 8490H. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.7988881796972076,-0.4186527050480604,-0.037700138072708,-0.4209898753609518,-0.38949787702104555]}
+{"_id":"prod-gen-37","_type":"product","name":"Ampere Core i7-14700K","sku":"AMP-COREI7-963","slug":{"_type":"slug","current":"ampere-core i7-14700k-426"},"status":"active","stock":76,"price":0.118,"machineDescription":"High-quality Ampere Core i7-14700K designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Ampere"},{"property":"Series","value":"Core"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.094,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Ampere and the performance of Core i7-14700K. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.8373041559220233,-0.8258467581717233,-0.5340103570047485,-0.9164230456895623,0.210565250268699]}
+{"_id":"prod-gen-38","_type":"product","name":"Marvell Ryzen 7 7800X3D","sku":"MAR-RYZEN7-684","slug":{"_type":"slug","current":"marvell-ryzen 7 7800x3d-28"},"status":"active","stock":22,"price":0.043,"machineDescription":"High-quality Marvell Ryzen 7 7800X3D designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Marvell"},{"property":"Series","value":"Ryzen"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.034,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Marvell and the performance of Ryzen 7 7800X3D. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.6111084859217413,0.5226958043900907,0.3914028990767038,-0.011117683326048455,0.5629520458332022]}
+{"_id":"prod-gen-39","_type":"product","name":"NXP Core i5-14600K","sku":"NXP-COREI5-479","slug":{"_type":"slug","current":"nxp-core i5-14600k-462"},"status":"active","stock":80,"price":0.105,"machineDescription":"High-quality NXP Core i5-14600K designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"NXP"},{"property":"Series","value":"Core"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.084,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of NXP and the performance of Core i5-14600K. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.6312525556990143,-0.8602758859536841,-0.1681490732992308,-0.8792401655323556,0.45126983225097916]}
+{"_id":"prod-gen-40","_type":"product","name":"Rockchip Ryzen 5 7600X","sku":"ROC-RYZEN5-44","slug":{"_type":"slug","current":"rockchip-ryzen 5 7600x-982"},"status":"active","stock":135,"price":0.139,"machineDescription":"High-quality Rockchip Ryzen 5 7600X designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Rockchip"},{"property":"Series","value":"Ryzen"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.111,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Rockchip and the performance of Ryzen 5 7600X. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.46015568125828366,-0.9726632824644672,-0.3633751654030526,0.1327330497966519,-0.7458524992469144]}
+{"_id":"prod-gen-41","_type":"product","name":"Intel Core i9-15900K","sku":"INT-COREI9-785","slug":{"_type":"slug","current":"intel-core i9-15900k-982"},"status":"active","stock":101,"price":0.125,"machineDescription":"High-quality Intel Core i9-15900K designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Intel"},{"property":"Series","value":"Core"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.1,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Intel and the performance of Core i9-15900K. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.7095182420973958,0.5444017751485664,0.2095376195891565,0.21513634170227935,0.2409750516670095]}
+{"_id":"prod-gen-42","_type":"product","name":"AMD Ryzen 9 9950X","sku":"AMD-RYZEN9-52","slug":{"_type":"slug","current":"amd-ryzen 9 9950x-613"},"status":"active","stock":67,"price":0.378,"machineDescription":"High-quality AMD Ryzen 9 9950X designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"AMD"},{"property":"Series","value":"Ryzen"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.302,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of AMD and the performance of Ryzen 9 9950X. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.21394179055939122,-0.399507747328264,0.6635277240386297,-0.2727025103129357,0.3169648958297395]}
+{"_id":"prod-gen-43","_type":"product","name":"Apple M3 Max","sku":"APP-M3MAX-162","slug":{"_type":"slug","current":"apple-m3 max-450"},"status":"active","stock":95,"price":0.118,"machineDescription":"High-quality Apple M3 Max designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Apple"},{"property":"Series","value":"M3"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.094,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Apple and the performance of M3 Max. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.5863031077277876,0.795298788882153,0.7352633335201446,-0.009646351381100482,0.40966798801177884]}
+{"_id":"prod-gen-44","_type":"product","name":"Qualcomm Snapdragon X Elite","sku":"QUA-SNAPDR-525","slug":{"_type":"slug","current":"qualcomm-snapdragon x elite-563"},"status":"active","stock":138,"price":0.471,"machineDescription":"High-quality Qualcomm Snapdragon X Elite designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Qualcomm"},{"property":"Series","value":"Snapdragon"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.377,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Qualcomm and the performance of Snapdragon X Elite. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[-0.40503298922369213,0.9933931360750414,-0.6869128690340733,0.7148184890829035,-0.5757949900573587]}
+{"_id":"prod-gen-45","_type":"product","name":"MediaTek EPYC 9654","sku":"MED-EPYC96-646","slug":{"_type":"slug","current":"mediatek-epyc 9654-150"},"status":"preorder","stock":84,"price":0.1,"machineDescription":"High-quality MediaTek EPYC 9654 designed for optimal performance in cpu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MediaTek"},{"property":"Series","value":"EPYC"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.08,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MediaTek and the performance of EPYC 9654. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-cpu"}],"embeddings":[0.4057444787162048,0.6132281025671895,0.7077874308809695,0.5525326303902107,-0.9615540273574799]}
+{"_id":"prod-gen-46","_type":"product","name":"Espressif ESP32-C6","sku":"ESP-ESP32C-594","slug":{"_type":"slug","current":"espressif-esp32-c6-350"},"status":"active","stock":194,"price":0.406,"machineDescription":"High-quality Espressif ESP32-C6 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Espressif"},{"property":"Series","value":"ESP32-C6"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.325,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Espressif and the performance of ESP32-C6. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.13508506205594428,0.6041872253952236,-0.2031351980842524,0.9629503077887209,-0.900642974267007]}
+{"_id":"prod-gen-47","_type":"product","name":"STMicroelectronics STM32H7","sku":"STM-STM32H-528","slug":{"_type":"slug","current":"stmicroelectronics-stm32h7-774"},"status":"active","stock":170,"price":0.453,"machineDescription":"High-quality STMicroelectronics STM32H7 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"STMicroelectronics"},{"property":"Series","value":"STM32H7"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.362,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of STMicroelectronics and the performance of STM32H7. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.9702080089514662,0.06369079548974188,-0.7463243794080545,0.06911233116824422,-0.6902311900411111]}
+{"_id":"prod-gen-48","_type":"product","name":"Microchip PIC32MZ","sku":"MIC-PIC32M-996","slug":{"_type":"slug","current":"microchip-pic32mz-967"},"status":"active","stock":128,"price":0.43,"machineDescription":"High-quality Microchip PIC32MZ designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Microchip"},{"property":"Series","value":"PIC32MZ"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.344,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Microchip and the performance of PIC32MZ. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.6644238824235922,-0.7438443253680538,-0.7303378202711557,-0.2194232031322627,0.8721913535207104]}
+{"_id":"prod-gen-49","_type":"product","name":"NXP RP2040","sku":"NXP-RP2040-900","slug":{"_type":"slug","current":"nxp-rp2040-192"},"status":"active","stock":174,"price":0.289,"machineDescription":"High-quality NXP RP2040 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"NXP"},{"property":"Series","value":"RP2040"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.231,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of NXP and the performance of RP2040. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.7853922101374782,0.9636296223070915,0.9357023016585271,-0.587793297723366,-0.3028744214782493]}
+{"_id":"prod-gen-50","_type":"product","name":"Texas Instruments nRF52840","sku":"TEX-NRF528-321","slug":{"_type":"slug","current":"texas instruments-nrf52840-872"},"status":"active","stock":182,"price":0.038,"machineDescription":"High-quality Texas Instruments nRF52840 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Texas Instruments"},{"property":"Series","value":"nRF52840"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.03,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Texas Instruments and the performance of nRF52840. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.6801781755600185,0.17123878901749712,0.641744955559723,-0.09661788826019158,0.3185250845400911]}
+{"_id":"prod-gen-51","_type":"product","name":"Infineon ATmega328P","sku":"INF-ATMEGA-783","slug":{"_type":"slug","current":"infineon-atmega328p-279"},"status":"active","stock":12,"price":0.348,"machineDescription":"High-quality Infineon ATmega328P designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Infineon"},{"property":"Series","value":"ATmega328P"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.278,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Infineon and the performance of ATmega328P. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.6710638471301469,0.7030539352985261,-0.19654426985327333,-0.8905943174201227,0.7207733882418563]}
+{"_id":"prod-gen-52","_type":"product","name":"Renesas SAMD51","sku":"REN-SAMD51-421","slug":{"_type":"slug","current":"renesas-samd51-761"},"status":"active","stock":15,"price":0.312,"machineDescription":"High-quality Renesas SAMD51 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Renesas"},{"property":"Series","value":"SAMD51"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.25,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Renesas and the performance of SAMD51. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.022217206662216382,0.5236793600318146,-0.6231368911584871,-0.08849322089064593,-0.5086723617760456]}
+{"_id":"prod-gen-53","_type":"product","name":"Silicon Labs Teensy 4.1","sku":"SIL-TEENSY-727","slug":{"_type":"slug","current":"silicon labs-teensy 4.1-834"},"status":"active","stock":108,"price":0.283,"machineDescription":"High-quality Silicon Labs Teensy 4.1 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Silicon Labs"},{"property":"Series","value":"Teensy"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.226,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Silicon Labs and the performance of Teensy 4.1. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.33796478440146216,-0.15195896251656782,0.34547672789635286,-0.6054778222028776,-0.5247870361611242]}
+{"_id":"prod-gen-54","_type":"product","name":"Nordic Semi ESP32-S2","sku":"NOR-ESP32S-610","slug":{"_type":"slug","current":"nordic semi-esp32-s2-983"},"status":"active","stock":38,"price":0.178,"machineDescription":"High-quality Nordic Semi ESP32-S2 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Nordic Semi"},{"property":"Series","value":"ESP32-S2"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.142,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Nordic Semi and the performance of ESP32-S2. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.8016703285554927,-0.3215516721016851,0.13217613042335663,0.8162002994409332,-0.6349090727414188]}
+{"_id":"prod-gen-55","_type":"product","name":"Raspberry Pi STM32F4","sku":"RAS-STM32F-716","slug":{"_type":"slug","current":"raspberry pi-stm32f4-676"},"status":"active","stock":189,"price":0.474,"machineDescription":"High-quality Raspberry Pi STM32F4 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Raspberry Pi"},{"property":"Series","value":"STM32F4"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.379,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Raspberry Pi and the performance of STM32F4. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.6732025930454606,0.7791854696280205,-0.8546553021773688,-0.2478593426034843,0.06631493068462735]}
+{"_id":"prod-gen-56","_type":"product","name":"Espressif ESP32-C6","sku":"ESP-ESP32C-500","slug":{"_type":"slug","current":"espressif-esp32-c6-576"},"status":"preorder","stock":0,"price":0.111,"machineDescription":"High-quality Espressif ESP32-C6 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Espressif"},{"property":"Series","value":"ESP32-C6"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.089,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Espressif and the performance of ESP32-C6. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.6822071039866451,0.8561570483134076,-0.48694645933525105,-0.09645131267419926,-0.4567140419722584]}
+{"_id":"prod-gen-57","_type":"product","name":"STMicroelectronics STM32H7","sku":"STM-STM32H-342","slug":{"_type":"slug","current":"stmicroelectronics-stm32h7-956"},"status":"preorder","stock":145,"price":0.368,"machineDescription":"High-quality STMicroelectronics STM32H7 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"STMicroelectronics"},{"property":"Series","value":"STM32H7"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.294,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of STMicroelectronics and the performance of STM32H7. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[-0.151318419442388,-0.48581112252601244,0.9918369832666509,0.41714740754552704,0.5350724607012762]}
+{"_id":"prod-gen-58","_type":"product","name":"Microchip PIC32MZ","sku":"MIC-PIC32M-75","slug":{"_type":"slug","current":"microchip-pic32mz-956"},"status":"active","stock":30,"price":0.334,"machineDescription":"High-quality Microchip PIC32MZ designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Microchip"},{"property":"Series","value":"PIC32MZ"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.267,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Microchip and the performance of PIC32MZ. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.21523640687998546,0.1542311547110562,-0.30133931211924003,-0.6459701289392878,0.9268633151591599]}
+{"_id":"prod-gen-59","_type":"product","name":"NXP RP2040","sku":"NXP-RP2040-19","slug":{"_type":"slug","current":"nxp-rp2040-914"},"status":"active","stock":196,"price":0.339,"machineDescription":"High-quality NXP RP2040 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"NXP"},{"property":"Series","value":"RP2040"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.271,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of NXP and the performance of RP2040. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.224601676674262,0.5909193804414294,-0.15971988758645295,0.35623742426132865,-0.3565410186574467]}
+{"_id":"prod-gen-60","_type":"product","name":"Texas Instruments nRF52840","sku":"TEX-NRF528-150","slug":{"_type":"slug","current":"texas instruments-nrf52840-808"},"status":"preorder","stock":59,"price":0.249,"machineDescription":"High-quality Texas Instruments nRF52840 designed for optimal performance in mcu workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Texas Instruments"},{"property":"Series","value":"nRF52840"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.199,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Texas Instruments and the performance of nRF52840. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-mcu"}],"embeddings":[0.022504594303957903,-0.6205617480465553,-0.42380309506358715,0.6669618301621487,-0.6871641384618707]}
+{"_id":"prod-gen-61","_type":"product","name":"Ubiquiti Dream Machine SE","sku":"UBI-DREAMM-506","slug":{"_type":"slug","current":"ubiquiti-dream machine se-710"},"status":"active","stock":189,"price":0.114,"machineDescription":"High-quality Ubiquiti Dream Machine SE designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Ubiquiti"},{"property":"Series","value":"Dream"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.091,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Ubiquiti and the performance of Dream Machine SE. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.9030903910891288,-0.39199974816908534,-0.09097451908869147,0.469055538539102,-0.182724564522031]}
+{"_id":"prod-gen-62","_type":"product","name":"Cisco Catalyst 9300","sku":"CIS-CATALY-580","slug":{"_type":"slug","current":"cisco-catalyst 9300-52"},"status":"active","stock":114,"price":0.117,"machineDescription":"High-quality Cisco Catalyst 9300 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Cisco"},{"property":"Series","value":"Catalyst"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.094,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Cisco and the performance of Catalyst 9300. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.925835347681027,-0.9024261177289967,0.5957514729921083,-0.2091203583142378,-0.3410425212823964]}
+{"_id":"prod-gen-63","_type":"product","name":"Netgear Orbi WiFi 7","sku":"NET-ORBIWI-774","slug":{"_type":"slug","current":"netgear-orbi wifi 7-560"},"status":"active","stock":129,"price":0.444,"machineDescription":"High-quality Netgear Orbi WiFi 7 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Netgear"},{"property":"Series","value":"Orbi"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.355,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Netgear and the performance of Orbi WiFi 7. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.007962784888126961,0.717748603342574,-0.6044133682481252,0.10612139562972756,0.42470599098095785]}
+{"_id":"prod-gen-64","_type":"product","name":"TP-Link Omada SDN Controller","sku":"TP--OMADAS-107","slug":{"_type":"slug","current":"tp-link-omada sdn controller-851"},"status":"active","stock":74,"price":0.441,"machineDescription":"High-quality TP-Link Omada SDN Controller designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"TP-Link"},{"property":"Series","value":"Omada"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.353,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of TP-Link and the performance of Omada SDN Controller. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.4435964035845066,-0.7306536052496553,0.05736538962184423,-0.8063192983223169,0.6935241886824595]}
+{"_id":"prod-gen-65","_type":"product","name":"Aruba Instant On AP22","sku":"ARU-INSTAN-538","slug":{"_type":"slug","current":"aruba-instant on ap22-657"},"status":"active","stock":104,"price":0.26,"machineDescription":"High-quality Aruba Instant On AP22 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Aruba"},{"property":"Series","value":"Instant"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.208,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Aruba and the performance of Instant On AP22. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.20464327560043882,0.42483778301733777,-0.4548254996515668,-0.702362338365349,0.8610419164400083]}
+{"_id":"prod-gen-66","_type":"product","name":"MikroTik CRS305","sku":"MIK-CRS305-839","slug":{"_type":"slug","current":"mikrotik-crs305-974"},"status":"preorder","stock":25,"price":0.37,"machineDescription":"High-quality MikroTik CRS305 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MikroTik"},{"property":"Series","value":"CRS305"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.296,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MikroTik and the performance of CRS305. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.27077335245899015,-0.6464948171818365,0.8947626379641793,0.7436943059190426,-0.9508573599280548]}
+{"_id":"prod-gen-67","_type":"product","name":"Juniper EX2300","sku":"JUN-EX2300-967","slug":{"_type":"slug","current":"juniper-ex2300-723"},"status":"active","stock":123,"price":0.279,"machineDescription":"High-quality Juniper EX2300 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Juniper"},{"property":"Series","value":"EX2300"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.223,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Juniper and the performance of EX2300. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.10546558590636623,-0.6102411551113405,0.5671356805096928,0.9683702015592288,0.0426961687167029]}
+{"_id":"prod-gen-68","_type":"product","name":"Fortinet FortiGate 40F","sku":"FOR-FORTIG-927","slug":{"_type":"slug","current":"fortinet-fortigate 40f-291"},"status":"active","stock":59,"price":0.027,"machineDescription":"High-quality Fortinet FortiGate 40F designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Fortinet"},{"property":"Series","value":"FortiGate"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.022,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Fortinet and the performance of FortiGate 40F. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.7586271721848814,0.6405542807220379,-0.85430761961818,0.17402346908655653,0.10596133157396048]}
+{"_id":"prod-gen-69","_type":"product","name":"Palo Alto PA-440","sku":"PAL-PA440-971","slug":{"_type":"slug","current":"palo alto-pa-440-799"},"status":"active","stock":170,"price":0.208,"machineDescription":"High-quality Palo Alto PA-440 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Palo Alto"},{"property":"Series","value":"PA-440"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.166,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Palo Alto and the performance of PA-440. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.5285564801863789,0.5824306911117452,-0.7654338098821447,-0.09581168814000152,0.5635451428542393]}
+{"_id":"prod-gen-70","_type":"product","name":"Sophos XG 115","sku":"SOP-XG115-567","slug":{"_type":"slug","current":"sophos-xg 115-203"},"status":"preorder","stock":60,"price":0.125,"machineDescription":"High-quality Sophos XG 115 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Sophos"},{"property":"Series","value":"XG"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.1,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Sophos and the performance of XG 115. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[-0.3582588659929695,-0.04416839685419838,-0.5766393856152883,0.5676643823768359,-0.5954431636075361]}
+{"_id":"prod-gen-71","_type":"product","name":"Ubiquiti Dream Machine SE","sku":"UBI-DREAMM-710","slug":{"_type":"slug","current":"ubiquiti-dream machine se-866"},"status":"active","stock":197,"price":0.229,"machineDescription":"High-quality Ubiquiti Dream Machine SE designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Ubiquiti"},{"property":"Series","value":"Dream"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.183,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Ubiquiti and the performance of Dream Machine SE. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.39590965931759037,0.707916574209283,-0.28516097058394485,0.934995761430099,-0.10381010324580053]}
+{"_id":"prod-gen-72","_type":"product","name":"Cisco Catalyst 9300","sku":"CIS-CATALY-791","slug":{"_type":"slug","current":"cisco-catalyst 9300-889"},"status":"active","stock":117,"price":0.029,"machineDescription":"High-quality Cisco Catalyst 9300 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Cisco"},{"property":"Series","value":"Catalyst"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.023,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Cisco and the performance of Catalyst 9300. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.4735065961260987,0.3642851455678118,0.5673472533449759,0.4060957038489401,0.7788831226877262]}
+{"_id":"prod-gen-73","_type":"product","name":"Netgear Orbi WiFi 7","sku":"NET-ORBIWI-117","slug":{"_type":"slug","current":"netgear-orbi wifi 7-394"},"status":"active","stock":68,"price":0.359,"machineDescription":"High-quality Netgear Orbi WiFi 7 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Netgear"},{"property":"Series","value":"Orbi"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.287,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Netgear and the performance of Orbi WiFi 7. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.30156423115826003,-0.48956153640364897,-0.868476637544203,0.2898437870698689,-0.7051647748406267]}
+{"_id":"prod-gen-74","_type":"product","name":"TP-Link Omada SDN Controller","sku":"TP--OMADAS-542","slug":{"_type":"slug","current":"tp-link-omada sdn controller-456"},"status":"active","stock":15,"price":0.255,"machineDescription":"High-quality TP-Link Omada SDN Controller designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"TP-Link"},{"property":"Series","value":"Omada"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.204,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of TP-Link and the performance of Omada SDN Controller. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.7918078383578959,0.08864171822661393,0.33943743021497985,0.26309383057804436,-0.8748728978841886]}
+{"_id":"prod-gen-75","_type":"product","name":"Aruba Instant On AP22","sku":"ARU-INSTAN-833","slug":{"_type":"slug","current":"aruba-instant on ap22-145"},"status":"active","stock":20,"price":0.423,"machineDescription":"High-quality Aruba Instant On AP22 designed for optimal performance in networking workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Aruba"},{"property":"Series","value":"Instant"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.338,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Aruba and the performance of Instant On AP22. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-networking"}],"embeddings":[0.14440883424781137,0.32676654871948085,-0.1428903731381268,-0.44782745577938976,-0.7413964178352597]}
+{"_id":"prod-gen-76","_type":"product","name":"Framework Laptop 13","sku":"FRA-LAPTOP-565","slug":{"_type":"slug","current":"framework-laptop 13-536"},"status":"active","stock":37,"price":0.177,"machineDescription":"High-quality Framework Laptop 13 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Framework"},{"property":"Series","value":"Laptop"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.142,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Framework and the performance of Laptop 13. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.2521370599045747,-0.9920393742799876,0.020722231377044986,0.45215016069260683,0.9360641954404911]}
+{"_id":"prod-gen-77","_type":"product","name":"Apple MacBook Pro 16","sku":"APP-MACBOO-965","slug":{"_type":"slug","current":"apple-macbook pro 16-168"},"status":"active","stock":86,"price":0.346,"machineDescription":"High-quality Apple MacBook Pro 16 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Apple"},{"property":"Series","value":"MacBook"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.277,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Apple and the performance of MacBook Pro 16. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.37838265094497414,-0.7931853149517178,-0.23350625481517606,-0.9763087076826749,-0.6414250610910208]}
+{"_id":"prod-gen-78","_type":"product","name":"Dell XPS 15","sku":"DEL-XPS15-668","slug":{"_type":"slug","current":"dell-xps 15-790"},"status":"active","stock":195,"price":0.399,"machineDescription":"High-quality Dell XPS 15 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Dell"},{"property":"Series","value":"XPS"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.319,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Dell and the performance of XPS 15. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.46753679371934886,0.45185212987494094,0.09875525409902774,0.8420920062197916,0.4968390101200926]}
+{"_id":"prod-gen-79","_type":"product","name":"Lenovo ThinkPad X1 Carbon","sku":"LEN-THINKP-460","slug":{"_type":"slug","current":"lenovo-thinkpad x1 carbon-892"},"status":"active","stock":86,"price":0.49,"machineDescription":"High-quality Lenovo ThinkPad X1 Carbon designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Lenovo"},{"property":"Series","value":"ThinkPad"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.392,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Lenovo and the performance of ThinkPad X1 Carbon. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.6863204719885079,0.21260935760076793,0.47602151334993925,-0.49656500699324546,0.4307435264206545]}
+{"_id":"prod-gen-80","_type":"product","name":"HP Spectre x360","sku":"HP-SPECTR-968","slug":{"_type":"slug","current":"hp-spectre x360-607"},"status":"active","stock":147,"price":0.455,"machineDescription":"High-quality HP Spectre x360 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"HP"},{"property":"Series","value":"Spectre"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.364,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of HP and the performance of Spectre x360. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.031896693611509486,-0.6122091107263297,0.7917631426178875,-0.313324806164756,-0.019782588078251173]}
+{"_id":"prod-gen-81","_type":"product","name":"ASUS ROG Zephyrus G14","sku":"ASU-ROGZEP-168","slug":{"_type":"slug","current":"asus-rog zephyrus g14-679"},"status":"active","stock":89,"price":0.347,"machineDescription":"High-quality ASUS ROG Zephyrus G14 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"ASUS"},{"property":"Series","value":"ROG"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.278,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of ASUS and the performance of ROG Zephyrus G14. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.5571690456055196,-0.8751005768541575,0.9533503527450589,-0.34143647394234256,-0.41983702401106116]}
+{"_id":"prod-gen-82","_type":"product","name":"Acer Swift Edge 16","sku":"ACE-SWIFTE-683","slug":{"_type":"slug","current":"acer-swift edge 16-550"},"status":"active","stock":125,"price":0.124,"machineDescription":"High-quality Acer Swift Edge 16 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Acer"},{"property":"Series","value":"Swift"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.099,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Acer and the performance of Swift Edge 16. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.9021075392388451,0.16581636409248368,-0.3150775897483926,-0.29225144533459213,-0.17061152394522727]}
+{"_id":"prod-gen-83","_type":"product","name":"Razer Blade 15","sku":"RAZ-BLADE1-494","slug":{"_type":"slug","current":"razer-blade 15-79"},"status":"active","stock":58,"price":0.154,"machineDescription":"High-quality Razer Blade 15 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Razer"},{"property":"Series","value":"Blade"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.123,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Razer and the performance of Blade 15. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.30681324983915426,0.30378196253125345,-0.3992559190270737,-0.6929235930681463,0.5300742764453268]}
+{"_id":"prod-gen-84","_type":"product","name":"MSI Stealth 16","sku":"MSI-STEALT-386","slug":{"_type":"slug","current":"msi-stealth 16-381"},"status":"preorder","stock":80,"price":0.081,"machineDescription":"High-quality MSI Stealth 16 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"MSI"},{"property":"Series","value":"Stealth"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.065,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of MSI and the performance of Stealth 16. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.0013699498054391412,0.3438755951232102,-0.9553616434500616,-0.2925689339175932,-0.1983136593838184]}
+{"_id":"prod-gen-85","_type":"product","name":"System76 Lemur Pro","sku":"SYS-LEMURP-468","slug":{"_type":"slug","current":"system76-lemur pro-872"},"status":"active","stock":49,"price":0.365,"machineDescription":"High-quality System76 Lemur Pro designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"System76"},{"property":"Series","value":"Lemur"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.292,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of System76 and the performance of Lemur Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.829339272629235,-0.7085725986110836,0.2376170912791502,0.6918590997003364,0.9396588193574809]}
+{"_id":"prod-gen-86","_type":"product","name":"Framework Laptop 13","sku":"FRA-LAPTOP-404","slug":{"_type":"slug","current":"framework-laptop 13-151"},"status":"active","stock":69,"price":0.43,"machineDescription":"High-quality Framework Laptop 13 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Framework"},{"property":"Series","value":"Laptop"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.344,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Framework and the performance of Laptop 13. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[0.9387005223482368,-0.8742523022317004,-0.9094369675432958,0.4568947869869844,-0.012519643141562398]}
+{"_id":"prod-gen-87","_type":"product","name":"Apple MacBook Pro 16","sku":"APP-MACBOO-162","slug":{"_type":"slug","current":"apple-macbook pro 16-621"},"status":"active","stock":31,"price":0.207,"machineDescription":"High-quality Apple MacBook Pro 16 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Apple"},{"property":"Series","value":"MacBook"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.166,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Apple and the performance of MacBook Pro 16. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.7814245181854047,-0.18629997545039467,-0.9278765964319646,0.3290154440368467,-0.6321233397438881]}
+{"_id":"prod-gen-88","_type":"product","name":"Dell XPS 15","sku":"DEL-XPS15-612","slug":{"_type":"slug","current":"dell-xps 15-832"},"status":"active","stock":10,"price":0.281,"machineDescription":"High-quality Dell XPS 15 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Dell"},{"property":"Series","value":"XPS"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.225,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Dell and the performance of XPS 15. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.7884917780334959,0.6656670720577957,-0.839739834288947,-0.6931224102725009,-0.12074774195237015]}
+{"_id":"prod-gen-89","_type":"product","name":"Lenovo ThinkPad X1 Carbon","sku":"LEN-THINKP-954","slug":{"_type":"slug","current":"lenovo-thinkpad x1 carbon-897"},"status":"active","stock":174,"price":0.283,"machineDescription":"High-quality Lenovo ThinkPad X1 Carbon designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Lenovo"},{"property":"Series","value":"ThinkPad"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.226,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Lenovo and the performance of ThinkPad X1 Carbon. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.6352761146833996,-0.06075179709439893,-0.7927593476452657,0.07683012952550294,-0.06002690362929197]}
+{"_id":"prod-gen-90","_type":"product","name":"HP Spectre x360","sku":"HP-SPECTR-423","slug":{"_type":"slug","current":"hp-spectre x360-32"},"status":"active","stock":175,"price":0.211,"machineDescription":"High-quality HP Spectre x360 designed for optimal performance in laptops workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"HP"},{"property":"Series","value":"Spectre"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.169,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of HP and the performance of Spectre x360. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-laptops"}],"embeddings":[-0.7294477491601117,-0.9480305862609404,0.5576953621531122,-0.2881580341140313,-0.8553308108970474]}
+{"_id":"prod-gen-91","_type":"product","name":"Keychron Q2 Pro","sku":"KEY-Q2PRO-957","slug":{"_type":"slug","current":"keychron-q2 pro-732"},"status":"active","stock":173,"price":0.045,"machineDescription":"High-quality Keychron Q2 Pro designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Keychron"},{"property":"Series","value":"Q2"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.036,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Keychron and the performance of Q2 Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.9337803903838888,-0.5202243807540543,0.04623262675252904,0.9679272802565622,-0.2356493176413199]}
+{"_id":"prod-gen-92","_type":"product","name":"Logitech MX Master 3S","sku":"LOG-MXMAST-857","slug":{"_type":"slug","current":"logitech-mx master 3s-279"},"status":"active","stock":37,"price":0.402,"machineDescription":"High-quality Logitech MX Master 3S designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Logitech"},{"property":"Series","value":"MX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.322,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Logitech and the performance of MX Master 3S. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.19485094274732084,0.23430139264908068,-0.11470090258968835,-0.12270364453563443,0.29664317228213055]}
+{"_id":"prod-gen-93","_type":"product","name":"Razer DeathAdder V3","sku":"RAZ-DEATHA-462","slug":{"_type":"slug","current":"razer-deathadder v3-226"},"status":"active","stock":0,"price":0.226,"machineDescription":"High-quality Razer DeathAdder V3 designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Razer"},{"property":"Series","value":"DeathAdder"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.181,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Razer and the performance of DeathAdder V3. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.795682842205713,-0.2900028526682512,0.4087662803209917,0.3123057571158112,-0.9948711218173776]}
+{"_id":"prod-gen-94","_type":"product","name":"Corsair K70 RGB","sku":"COR-K70RGB-316","slug":{"_type":"slug","current":"corsair-k70 rgb-586"},"status":"active","stock":178,"price":0.051,"machineDescription":"High-quality Corsair K70 RGB designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Corsair"},{"property":"Series","value":"K70"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.041,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Corsair and the performance of K70 RGB. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.46757782620096155,0.735856129151411,-0.4926729547779163,-0.39084772465724904,-0.20281829404600682]}
+{"_id":"prod-gen-95","_type":"product","name":"SteelSeries Apex Pro","sku":"STE-APEXPR-140","slug":{"_type":"slug","current":"steelseries-apex pro-109"},"status":"active","stock":81,"price":0.217,"machineDescription":"High-quality SteelSeries Apex Pro designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"SteelSeries"},{"property":"Series","value":"Apex"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.174,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of SteelSeries and the performance of Apex Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.32504887271178684,-0.7655450700399047,0.7668623126191612,-0.342182718125732,0.15572861391912807]}
+{"_id":"prod-gen-96","_type":"product","name":"HyperX Cloud III","sku":"HYP-CLOUDI-836","slug":{"_type":"slug","current":"hyperx-cloud iii-116"},"status":"active","stock":199,"price":0.404,"machineDescription":"High-quality HyperX Cloud III designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"HyperX"},{"property":"Series","value":"Cloud"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.323,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of HyperX and the performance of Cloud III. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.720899632023599,0.7370536137187804,0.8365187859061602,0.10782115956598748,-0.07156537469984148]}
+{"_id":"prod-gen-97","_type":"product","name":"Wooting 60HE","sku":"WOO-60HE-145","slug":{"_type":"slug","current":"wooting-60he-97"},"status":"preorder","stock":119,"price":0.268,"machineDescription":"High-quality Wooting 60HE designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Wooting"},{"property":"Series","value":"60HE"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.214,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Wooting and the performance of 60HE. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.4843430772227908,0.34146138121590575,0.03520975747139654,-0.7135708223890895,0.8670418996593454]}
+{"_id":"prod-gen-98","_type":"product","name":"Glorious GMMK Pro","sku":"GLO-GMMKPR-389","slug":{"_type":"slug","current":"glorious-gmmk pro-89"},"status":"active","stock":170,"price":0.467,"machineDescription":"High-quality Glorious GMMK Pro designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Glorious"},{"property":"Series","value":"GMMK"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.374,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Glorious and the performance of GMMK Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.6535198405015175,-0.18994346604619783,0.22693614011591312,0.8500602454202477,0.15023348011927418]}
+{"_id":"prod-gen-99","_type":"product","name":"Ducky One 3 Mini","sku":"DUC-ONE3MI-392","slug":{"_type":"slug","current":"ducky-one 3 mini-923"},"status":"active","stock":171,"price":0.221,"machineDescription":"High-quality Ducky One 3 Mini designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Ducky"},{"property":"Series","value":"One"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.177,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Ducky and the performance of One 3 Mini. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.503811459835733,0.09332280894057132,-0.08912986600755035,-0.9142146207228692,-0.5382438589247713]}
+{"_id":"prod-gen-100","_type":"product","name":"NuPhy Halo65","sku":"NUP-HALO65-762","slug":{"_type":"slug","current":"nuphy-halo65-640"},"status":"active","stock":16,"price":0.167,"machineDescription":"High-quality NuPhy Halo65 designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"NuPhy"},{"property":"Series","value":"Halo65"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.134,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of NuPhy and the performance of Halo65. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.3650815845924458,0.21294291987785408,0.05720789482536226,-0.051515723153886084,-0.8650536691387098]}
+{"_id":"prod-gen-101","_type":"product","name":"Keychron Q2 Pro","sku":"KEY-Q2PRO-266","slug":{"_type":"slug","current":"keychron-q2 pro-613"},"status":"active","stock":142,"price":0.17,"machineDescription":"High-quality Keychron Q2 Pro designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Keychron"},{"property":"Series","value":"Q2"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.136,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Keychron and the performance of Q2 Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.4740128983896239,-0.9026008736690718,-0.9753032438930451,0.1177579167284486,0.610021414404782]}
+{"_id":"prod-gen-102","_type":"product","name":"Logitech MX Master 3S","sku":"LOG-MXMAST-988","slug":{"_type":"slug","current":"logitech-mx master 3s-296"},"status":"active","stock":47,"price":0.319,"machineDescription":"High-quality Logitech MX Master 3S designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Logitech"},{"property":"Series","value":"MX"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.255,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Logitech and the performance of MX Master 3S. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.3805756786391947,-0.8613728936747811,0.3463220720737574,0.10517101046799571,0.17959874111491048]}
+{"_id":"prod-gen-103","_type":"product","name":"Razer DeathAdder V3","sku":"RAZ-DEATHA-773","slug":{"_type":"slug","current":"razer-deathadder v3-867"},"status":"preorder","stock":86,"price":0.233,"machineDescription":"High-quality Razer DeathAdder V3 designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Razer"},{"property":"Series","value":"DeathAdder"}],"negotiationRules":{"isNegotiable":false,"floorPrice":0.186,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Razer and the performance of DeathAdder V3. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[0.22527069008860545,-0.7046075960688296,0.7581051216222168,-0.7776306041631884,0.8786544921192903]}
+{"_id":"prod-gen-104","_type":"product","name":"Corsair K70 RGB","sku":"COR-K70RGB-44","slug":{"_type":"slug","current":"corsair-k70 rgb-295"},"status":"active","stock":2,"price":0.101,"machineDescription":"High-quality Corsair K70 RGB designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"Corsair"},{"property":"Series","value":"K70"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.081,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of Corsair and the performance of K70 RGB. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.7000792958618234,-0.16393972736932416,-0.17232939173501638,-0.9712150084300959,0.07326481048469624]}
+{"_id":"prod-gen-105","_type":"product","name":"SteelSeries Apex Pro","sku":"STE-APEXPR-568","slug":{"_type":"slug","current":"steelseries-apex pro-678"},"status":"active","stock":180,"price":0.038,"machineDescription":"High-quality SteelSeries Apex Pro designed for optimal performance in peripherals workloads. Reliable, efficient, and well-supported.","hardwareSpecs":[{"property":"Brand","value":"SteelSeries"},{"property":"Series","value":"Apex"}],"negotiationRules":{"isNegotiable":true,"floorPrice":0.03,"maxDiscountPercentage":20},"agentSalesInstructions":"Highlight the reliability of SteelSeries and the performance of Apex Pro. Offer volume discounts if customer asks.","categories":[{"_type":"reference","_ref":"cat-peripherals"}],"embeddings":[-0.9872228159597103,-0.9582494439847586,-0.3128902596721841,-0.9746253149345838,-0.35866331415598474]}
