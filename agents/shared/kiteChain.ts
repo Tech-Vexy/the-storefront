@@ -15,6 +15,13 @@ export const kiteTestnet = {
 
 export const STOREFRONT_CONTRACT = "0xf307f0bfc6ebb291add5a52773fde236c4aeeba7";
 
+// Kite Account-Abstraction paymaster (testnet) — sponsors gas for UserOps.
+// Source: gokite-aa-sdk NETWORKS.kite_testnet.paymaster. Override per-env via
+// KITE_PAYMASTER_ADDRESS (e.g. for mainnet 0x83b66982F07247F017b7954F8a775135beE931a4).
+export const KITE_PAYMASTER_ADDRESS =
+  (typeof process !== "undefined" && process.env && process.env.KITE_PAYMASTER_ADDRESS) ||
+  "0x9Adcbf85D5c724611a490Ba9eDc4d38d6F39e92d";
+
 export const STOREFRONT_ABI = [
   "function settleOrder(string kitePassportId, string orderId) external payable",
   "function storePolicyHash() view returns (bytes32)",

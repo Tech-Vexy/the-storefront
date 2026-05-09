@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx hardhat *)"
+      "Bash(npx hardhat *)",
+      "WebFetch(domain:docs.gokite.ai)",
+      "Bash(grep -r \"gokite-aa-sdk\" --include=package.json -l)",
+      "Bash(ls node_modules/gokite-aa-sdk)",
+      "Bash(ls agents/node_modules/gokite-aa-sdk)",
+      "Bash(pnpm tsc *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

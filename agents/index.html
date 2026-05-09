@@ -143,10 +143,6 @@ Assigning task variables: tsx kiteBuyer.ts "[Mission]"
 <a href="/dashboard">Swarm Dashboard</a>
 <a href="/docs">Docs</a>
 </div>
-<div style="display: flex; align-items: center; gap: 0.75rem;">
-  <div id="wallet-balance" style="display: none; align-items: center; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.25); color: #10b981; padding: 0.4rem 0.9rem; border-radius: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; box-shadow: 0 0 10px rgba(16, 185, 129, 0.05);">0.00 KITE</div>
-  <div id="connect-wallet-btn" class="btn-primary" style="padding:0.5rem 1.2rem;font-size:0.75rem;cursor:pointer;" onclick="connectWallet()">CONNECT WALLET</div>
-</div>
 </nav>
 <div class="ticker" id="ticker"><div class="ticker-inner" id="ticker-inner">Loading market data...</div></div>
 <section class="hero">
@@ -214,14 +210,6 @@ Assigning task variables: tsx kiteBuyer.ts "[Mission]"
 <p style="margin-top:0.4rem">Built for the Kite AI Global Hackathon 2026</p>
 </footer>
 <script type="module">
-import { createClient } from 'https://esm.sh/@sanity/client@6.15.0'
-
-const sanityClient = createClient({
-  projectId: '75fz8bzj',
-  dataset: 'production',
-  apiVersion: '2024-04-07',
-  useCdn: false,
-})
 
 const quantities={};let negState={};let searchTimer=null;let userWalletAccount=null;
 const gradients=['linear-gradient(135deg,#0f172a,#1e3a5f)','linear-gradient(135deg,#0f172a,#312e81)','linear-gradient(135deg,#0f172a,#064e3b)','linear-gradient(135deg,#0f172a,#4a1d5e)','linear-gradient(135deg,#0f172a,#7c2d12)'];
@@ -241,27 +229,18 @@ function chgQty(sku,d){quantities[sku]=Math.max(1,Math.min(100,(quantities[sku]|
 
 async function loadProducts(query){
 showSkeletons();
-try{
-const filter = query ? `_type == "product" && (name match $q || machineDescription match $q)` : `_type == "product"`;
-const params = query ? { q: `*${query}*` } : {};
-const items = await sanityClient.fetch(
-  `*[${filter}] | order(name asc) {
-    name, sku, price, stock, machineDescription, hardwareSpecs, negotiationRules, status
-  }`,
-  params
-);
-renderProducts(items||[], items?.length||0);
-const t=document.getElementById('ticker-inner');
-if(items?.length){t.innerHTML=(items.map(p=>`<span style="margin-right:2.5rem">${p.sku} <span style="color:${Math.random()>0.5?'var(--ok)':'var(--danger)'}"> ${Math.random()>0.5?'▲':'▼'} ${p.price} KITE</span></span>`).join('')).repeat(3)}
-}catch(e){
-console.error("Sanity load failed, falling back to local API:", e);
 try {
-  const u=new URL('/search',location.origin);if(query)u.searchParams.set('query',query);
-  const r=await fetch(u);const d=await r.json();
-  renderProducts(d.items||[],d.pagination?.total);
+  const u=new URL('/search',location.origin);
+  if(query)u.searchParams.set('query',query);
+  const r=await fetch(u);
+  const d=await r.json();
+  const items = d.items || [];
+  renderProducts(items, d.pagination?.total || items.length);
+  const t=document.getElementById('ticker-inner');
+  if(items.length){t.innerHTML=(items.map(p=>`<span style="margin-right:2.5rem">${p.sku} <span style="color:${Math.random()>0.5?'var(--ok)':'var(--danger)'}"> ${Math.random()>0.5?'▲':'▼'} ${p.price} KITE</span></span>`).join('')).repeat(3)}
 } catch(err) {
-  document.getElementById('grid').innerHTML='<div class="err-box">⚠️ Failed to load catalog from Sanity and Local API.</div>';
-}
+  console.error("Local API load failed:", err);
+  document.getElementById('grid').innerHTML='<div class="err-box">⚠️ Failed to load catalog from same-origin proxy server.</div>';
 }
 loadOrders();
 }
@@ -269,42 +248,40 @@ loadOrders();
 function debounceSearch(){clearTimeout(searchTimer);searchTimer=setTimeout(()=>loadProducts(document.getElementById('search-input').value.trim()),350)}
 function closeModal(id){document.getElementById(id).style.display='none';if(id==='buy-modal'){for(let i=1;i<=4;i++)document.getElementById('s'+i).className='agent-step';document.querySelector('#s3 span').textContent='Settling on Kite blockchain...';document.getElementById('bm-steps').style.display='block';document.getElementById('bm-ok').style.display='none'}}
 async function buyProduct(sku,name,price){
-if (!userWalletAccount) {
-  alert("Please connect your Web3 wallet first! We are launching your wallet connection prompt now.");
-  connectWallet();
-  return;
-}
 const qty = quantities[sku] || 1;
-const totalCost = price ? (price * qty).toFixed(2) : '0.00';
+const totalCost = price ? (price * qty).toFixed(4) : '0.0000';
 const m=document.getElementById('buy-modal');const steps=document.getElementById('bm-steps');const ok=document.getElementById('bm-ok');
 m.style.display='flex';steps.style.display='block';ok.style.display='none';
 document.getElementById('bm-title').textContent=`Purchasing ${name}...`;
 const setStep=(n,s)=>document.getElementById('s'+n).className='agent-step '+s;
 try{
-setStep(1,'step-active');await sleep(1200);setStep(1,'step-done');
+setStep(1,'step-active');await sleep(1000);setStep(1,'step-done');
 setStep(2,'step-active');
-const res=await fetch('/api/web-buy',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sku,quantity:qty})});
-const result=await res.json();if(result.error)throw new Error(result.error.message||'Purchase failed');
+
+// Call backend proxy WebBuyerAgent to sign and submit the on-chain transaction
+const res=await fetch('/api/web-buy',{
+  method:'POST',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({sku,quantity:qty})
+});
+const result=await res.json();
+if(result.error)throw new Error(result.error.message||'Purchase failed');
+
 setStep(2,'step-done');
 
-// Step 3: Show exact price being sent to store wallet!
+// Step 3: Show exact price being sent to storefront attestation by proxy buyer
 setStep(3,'step-active');
 const s3Text = document.querySelector('#s3 span');
-s3Text.innerHTML = `Sending <span style="color:var(--accent);font-weight:700;">${totalCost} KITE</span> to Store Wallet (0x1b48...dc38)...`;
-await sleep(2500);
+s3Text.innerHTML = `Sovereign Buyer Agent attesting <span style="color:var(--accent);font-weight:700;">${totalCost} KITE</span> on-chain...`;
+await sleep(1500);
 setStep(3,'step-done');
-s3Text.innerHTML = `Sent <span style="color:var(--ok);font-weight:700;">${totalCost} KITE</span> successfully!`;
+s3Text.innerHTML = `Settled <span style="color:var(--ok);font-weight:700;">${totalCost} KITE</span> on-chain successfully!`;
 
-setStep(4,'step-active');await sleep(1200);setStep(4,'step-done');
+setStep(4,'step-active');await sleep(1000);setStep(4,'step-done');
 steps.style.display='none';ok.style.display='block';document.getElementById('bm-title').textContent='Protocol Fulfilled';
 loadProducts(document.getElementById('search-input').value.trim());
-}catch(err){alert('Agent Failure: '+err.message);closeModal('buy-modal')}}
+}catch(err){alert('Agent Settle Failure: '+err.message);closeModal('buy-modal')}}
 function startNeg(sku,name,listPrice){
-if (!userWalletAccount) {
-  alert("Please connect your Web3 wallet first! We are launching your wallet connection prompt now.");
-  connectWallet();
-  return;
-}
 negState={sku,name,listPrice,history:[],turns:0,finalPrice:null};
 document.getElementById('nm-title').textContent=`Negotiate: ${name}`;
 document.getElementById('nm-sub').textContent=`List price: ${listPrice} KITE · Max 3 rounds`;
@@ -350,11 +327,6 @@ function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 
 async function deployAgent(productName) {
   if (!productName) return;
-  if (!userWalletAccount) {
-    alert("Please connect your Web3 wallet first! We are launching your wallet connection prompt now.");
-    connectWallet();
-    return;
-  }
   const m = document.getElementById('agent-modal');
   const term = document.getElementById('agent-terminal');
   const title = document.getElementById('am-title');
@@ -418,77 +390,7 @@ async function deployCustomAgent() {
   await deployAgent(val);
 }
 
-async function connectWallet() {
-  if (typeof window.ethereum !== 'undefined') {
-    try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      updateWalletUI(accounts[0]);
-    } catch (err) {
-      console.error("Wallet connection failed:", err);
-    }
-  } else {
-    alert("No Web3 wallet detected! Please install MetaMask or a compatible Web3 browser extension.");
-  }
-}
 
-async function checkWalletConnection() {
-  if (typeof window.ethereum !== 'undefined') {
-    try {
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      if (accounts.length > 0) {
-        updateWalletUI(accounts[0]);
-      }
-    } catch (err) {
-      console.error("Error checking wallet connection:", err);
-    }
-  }
-}
-
-async function updateWalletUI(account) {
-  userWalletAccount = account || null;
-  const btn = document.getElementById('connect-wallet-btn');
-  const balElement = document.getElementById('wallet-balance');
-  if (account) {
-    const shortAddr = account.substring(0, 6) + '...' + account.substring(account.length - 4);
-    btn.textContent = shortAddr.toUpperCase();
-    btn.style.background = 'linear-gradient(90deg, #10b981, #059669)';
-    btn.style.borderColor = '#10b981';
-    btn.style.color = '#fff';
-    btn.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.4)';
-    if (balElement) {
-      try {
-        const balanceWei = await window.ethereum.request({
-          method: 'eth_getBalance',
-          params: [account, 'latest']
-        });
-        const balanceEth = parseInt(balanceWei, 16) / 1e18;
-        balElement.textContent = balanceEth.toFixed(2) + ' KITE';
-        balElement.style.display = 'inline-flex';
-      } catch (err) {
-        console.error("Failed to fetch wallet balance:", err);
-        balElement.style.display = 'none';
-      }
-    }
-  } else {
-    btn.textContent = 'CONNECT WALLET';
-    btn.style.background = '';
-    btn.style.borderColor = '';
-    btn.style.color = '';
-    btn.style.boxShadow = '';
-    if (balElement) {
-      balElement.style.display = 'none';
-    }
-  }
-}
-
-// Set up listeners for account/chain changes
-if (typeof window.ethereum !== 'undefined') {
-  window.ethereum.on('accountsChanged', (accounts) => {
-    updateWalletUI(accounts[0]).then(() => {
-      loadOrders();
-    });
-  });
-}
 
 async function loadOrders() {
   try {
@@ -519,7 +421,7 @@ async function loadOrders() {
       const shortId = o.onChainOrderId ? o.onChainOrderId.substring(0, 8) + '...' : '—';
       
       const isRefunded = o.status === 'refunded';
-      const showRefundBtn = !isRefunded && userWalletAccount && o.customerWallet && o.customerWallet.toLowerCase() === userWalletAccount.toLowerCase();
+      const showRefundBtn = !isRefunded;
       
       let actionHtml = '';
       if (isRefunded) {
@@ -561,63 +463,63 @@ async function requestRefund(orderId) {
     if (data.error) throw new Error(data.error.message);
     alert(`Refund successful!\n\n${data.refundAmount.toFixed(2)} KITE has been sent back to your wallet.\n\nTx: ${data.txHash}`);
     loadOrders();
-    if (typeof window.connectWallet === 'function') {
-      checkWalletConnection();
-    }
   } catch (err) {
     alert("Refund failed: " + err.message);
   }
 }
 
 async function checkoutNegotiated() {
-  if (!userWalletAccount) {
-    alert("Please connect your wallet first!");
-    return;
-  }
   if (!negState.finalPrice || !negState.sku) {
     alert("No valid negotiation price found.");
     return;
   }
   
   try {
-    if (!confirm(`Are you ready to purchase "${negState.name}" for the negotiated price of ${negState.finalPrice} KITE?\n\nThis will trigger an on-chain transfer directly from your connected wallet.`)) return;
+    if (!confirm(`Are you ready to purchase "${negState.name}" for the negotiated price of ${negState.finalPrice} KITE?\n\nThis will trigger the background Swarm Buyer Agent to sign and settle the transaction on-chain.`)) return;
     
     closeModal('neg-modal');
     
-    const weiAmount = BigInt(Math.floor(negState.finalPrice * 1e18));
-    const hexAmount = '0x' + weiAmount.toString(16);
+    // Open the buy modal to show step-by-step progress
+    const m=document.getElementById('buy-modal');const steps=document.getElementById('bm-steps');const ok=document.getElementById('bm-ok');
+    m.style.display='flex';steps.style.display='block';ok.style.display='none';
+    document.getElementById('bm-title').textContent=`Settling Negotiated ${negState.name}...`;
+    const setStep=(n,s)=>document.getElementById('s'+n).className='agent-step '+s;
     
-    const txHash = await window.ethereum.request({
-      method: 'eth_sendTransaction',
-      params: [{
-        from: userWalletAccount,
-        to: '0xf307f0bfc6ebb291add5a52773fde236c4aeeba7', // Store Wallet payee address
-        value: hexAmount
-      }]
-    });
+    setStep(1,'step-active');await sleep(1000);setStep(1,'step-done');
+    setStep(2,'step-active');
     
     const settleRes = await fetch('/api/negotiate-settle', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         sku: negState.sku,
-        price: negState.finalPrice,
-        txHash,
-        buyerAddress: userWalletAccount
+        price: negState.finalPrice
       })
     });
     
     const settleData = await settleRes.json();
-    if (settleData.error) throw new Error(settleData.error.message);
+    if (settleData.error) throw new Error(settleData.error.message || 'Settlement failed');
     
-    alert(`Success!\n\nYour negotiated purchase has been fully settled on-chain.\n\nReceipt ID: ${settleData.orderId}\nTransaction: ${txHash}`);
+    setStep(2,'step-done');
+    
+    setStep(3,'step-active');
+    const s3Text = document.querySelector('#s3 span');
+    s3Text.innerHTML = `Attesting negotiated settlement of <span style="color:var(--accent);font-weight:700;">${negState.finalPrice} KITE</span> on-chain...`;
+    await sleep(1500);
+    setStep(3,'step-done');
+    s3Text.innerHTML = `Settled <span style="color:var(--ok);font-weight:700;">${negState.finalPrice} KITE</span> successfully!`;
+    
+    setStep(4,'step-active');await sleep(1000);setStep(4,'step-done');
+    steps.style.display='none';ok.style.display='block';document.getElementById('bm-title').textContent='Protocol Fulfilled';
+    
+    alert(`Success!\n\nYour negotiated purchase has been signed and settled on-chain by the Buyer Agent.\n\nReceipt ID: ${settleData.orderId}\nTransaction: ${settleData.txHash}`);
     
     loadProducts();
-    checkWalletConnection();
     loadOrders();
     
   } catch (err) {
     alert("Checkout failed: " + err.message);
+    closeModal('buy-modal');
   }
 }
 
@@ -635,13 +537,12 @@ window.closeModal = closeModal;
 window.debounceSearch = debounceSearch;
 window.deployAgent = deployAgent;
 window.deployCustomAgent = deployCustomAgent;
-window.connectWallet = connectWallet;
 window.loadOrders = loadOrders;
 window.requestRefund = requestRefund;
 window.checkoutNegotiated = checkoutNegotiated;
 window.openVaultModal = openVaultModal;
 
-checkWalletConnection();
+loadOrders();
 loadProducts();
 </script>
 </body>

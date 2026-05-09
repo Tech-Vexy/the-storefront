@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { GokiteAASDK } from "gokite-aa-sdk";
-import { KITE_NETWORK_KEY, TREASURY_CONTRACT, kiteTestnet } from "./kiteChain";
+import { KITE_NETWORK_KEY, KITE_PAYMASTER_ADDRESS, TREASURY_CONTRACT, kiteTestnet } from "./kiteChain";
 import { TREASURY_ABI } from "./treasuryAbi";
 
 export interface SpendArgs {
@@ -59,6 +59,8 @@ export async function spendViaTreasury(args: SpendArgs): Promise<SpendResult> {
           callDatas: [callData],
         },
         async (hash) => args.signer.signMessage(ethers.getBytes(hash)),
+        undefined,
+        KITE_PAYMASTER_ADDRESS,
       );
       if (result.status.status === "success" && result.status.transactionHash) {
         return { txHash: result.status.transactionHash, payer: walletAddress, via: "aa" };

@@ -9,6 +9,7 @@ import { z } from "zod";
 import {
   KITE_CHAIN_ID,
   KITE_NETWORK_KEY,
+  KITE_PAYMASTER_ADDRESS,
   STOREFRONT_CONTRACT,
   STOREFRONT_ABI,
   TREASURY_CONTRACT,
@@ -230,6 +231,8 @@ const purchaseHardwareTool = new DynamicStructuredTool({
             callDatas: [settleData],
           },
           async (hash) => localSign(hash),
+          undefined,
+          KITE_PAYMASTER_ADDRESS,
         );
         if (result.status.status === "success") {
           txHash = result.status.transactionHash;

@@ -10,8 +10,11 @@ let preflightError: string | null = null;
 import { ChatGroq } from "@langchain/groq";
 import { HumanMessage } from "@langchain/core/messages";
 import { client as sanityClient } from "./sanity/client";
+import { GokiteAASDK } from "gokite-aa-sdk";
 import {
   KITE_CHAIN_ID,
+  KITE_NETWORK_KEY,
+  KITE_PAYMASTER_ADDRESS,
   STOREFRONT_ABI,
   STOREFRONT_CONTRACT,
   kiteTestnet,
@@ -62,6 +65,47 @@ const provider = new ethers.JsonRpcProvider(RPC_URL, {
 
 const wallet = new ethers.Wallet(process.env.KITE_PRIVATE_KEY as string, provider);
 const storefront = new ethers.Contract(STOREFRONT_CONTRACT, STOREFRONT_ABI, wallet);
+
+const BUNDLER_URL = (process.env.KITE_BUNDLER_URL || "https://bundler.testnet.gokite.ai/")
+  .trim()
+  .replace(/\/$/, "");
+
+async function localSign(hash: string): Promise<string> {
+  return await wallet.signMessage(ethers.getBytes(hash));
+}
+
+async function settleOrderAA(orderId: string, requiredWei: bigint): Promise<string> {
+  const settleData = new ethers.Interface(STOREFRONT_ABI).encodeFunctionData("settleOrder", [
+    PASSPORT_ID,
+    orderId,
+  ]);
+
+  try {
+    console.log(`[Manager] Trying sponsored Account Abstraction for order ${orderId} (${requiredWei} wei)...`);
+    const aa = new GokiteAASDK(KITE_NETWORK_KEY, RPC_URL, BUNDLER_URL);
+    const result = await aa.sendUserOperationAndWait(
+      wallet.address,
+      {
+        targets: [STOREFRONT_CONTRACT],
+        values: [requiredWei],
+        callDatas: [settleData],
+      },
+      async (hash) => localSign(hash),
+      undefined,
+      KITE_PAYMASTER_ADDRESS,
+    );
+
+    if (result.status.status === "success" && result.status.transactionHash) {
+      console.log(`[Manager] AA sponsored transaction succeeded! Tx: ${result.status.transactionHash}`);
+      return result.status.transactionHash;
+    } else {
+      throw new Error(result.status.reason || "AA transaction failed");
+    }
+  } catch (err: any) {
+    console.warn(`[Manager] AA error/fallback: ${err.message ?? err}`);
+    throw err;
+  }
+}
 
 // ─── Logging ──────────────────────────────────────────────────────────────────
 const searchMetrics: Record<string, number> = {};
@@ -752,23 +796,29 @@ app.post("/api/web-buy", async (req, res) => {
 
     logSwarm(`[Agentic Web] Initializing purchase for ${quantity}x ${sku} (${product.price} KITE)...`, requestId);
 
-    // 2. Perform On-Chain Settlement (Manager acting as Proxy Agent)
-    // TODO(treasury-v2): route web-buy through AgentTreasury once consumer-side wallets land.
-    const tx = await withSettlementHealing(
-      async (_attempt, gasMultiplier) => {
-        const overrides: any = { value: totalWei };
-        if (gasMultiplier !== 1) {
-          const fee = await provider.getFeeData();
-          if (fee.gasPrice) overrides.gasPrice = (fee.gasPrice * BigInt(Math.round(gasMultiplier * 100))) / 100n;
-        }
-        const t = await storefront.settleOrder(PASSPORT_ID, orderId, overrides);
-        const r = await t.wait();
-        if (r?.status !== 1) throw new Error(`web-buy tx ${t.hash} reverted`);
-        return t;
-      },
-      { agentId: "manager-web", agentName: "Manager", orderId, sku },
-    );
-    logSwarm(`[Agentic Web] Transaction sent: ${tx.hash}. Confirmed.`, requestId);
+    // 2. Perform On-Chain Settlement (Manager acting as Proxy Agent) sponsored by Paymaster via AA
+    let txHash = "";
+    try {
+      txHash = await settleOrderAA(orderId, totalWei);
+    } catch (aaErr: any) {
+      console.log(`[Agentic Web] Sponsored AA failed. Falling back to EOA...`);
+      const tx = await withSettlementHealing(
+        async (_attempt, gasMultiplier) => {
+          const overrides: any = { value: totalWei };
+          if (gasMultiplier !== 1) {
+            const fee = await provider.getFeeData();
+            if (fee.gasPrice) overrides.gasPrice = (fee.gasPrice * BigInt(Math.round(gasMultiplier * 100))) / 100n;
+          }
+          const t = await storefront.settleOrder(PASSPORT_ID, orderId, overrides);
+          const r = await t.wait();
+          if (r?.status !== 1) throw new Error(`web-buy tx ${t.hash} reverted`);
+          return t;
+        },
+        { agentId: "manager-web", agentName: "Manager", orderId, sku },
+      );
+      txHash = tx.hash;
+    }
+    logSwarm(`[Agentic Web] Transaction confirmed: ${txHash}`, requestId);
 
     // 3. Update Inventory/Revenue in Sanity & Create Order Document
     const stats = await sanityClient.fetch(`*[_type == "storeStats"][0]`);
@@ -792,7 +842,7 @@ app.post("/api/web-buy", async (req, res) => {
         status: "fulfilled",
         agentAssisted: false,
         onChainOrderId: orderId,
-        transactionHash: tx.hash
+        transactionHash: txHash
       });
       // Dec stock
       await sanityClient.patch(product._id).dec({ stock: quantity }).commit();
@@ -812,7 +862,7 @@ app.post("/api/web-buy", async (req, res) => {
       })
     });
 
-    res.json({ success: true, orderId, txHash: tx.hash });
+    res.json({ success: true, orderId, txHash });
   } catch (err: any) {
     logSwarm(`[Agentic Web] Failure: ${err.message}`, requestId);
     res.status(500).json(apiError("INTERNAL_ERROR", err.message));
@@ -820,8 +870,8 @@ app.post("/api/web-buy", async (req, res) => {
 });
 
 app.post("/api/negotiate-settle", async (req, res) => {
-  const { sku, price, txHash, buyerAddress } = req.body;
-  if (!sku || !price || !txHash || !buyerAddress) {
+  const { sku, price, buyerAddress } = req.body;
+  if (!sku || !price) {
     return res.status(400).json(apiError("BAD_REQUEST", "Missing required fields"));
   }
 
@@ -833,14 +883,41 @@ app.post("/api/negotiate-settle", async (req, res) => {
     if (!product) return res.status(404).json(apiError("NOT_FOUND", "Product not found"));
 
     const orderId = `neg-${randomUUID()}`;
-    logSwarm(`[Manager] Settlement received for negotiated deal: ${sku} at ${price} KITE. Tx: ${txHash}`, requestId);
+    const totalWei = BigInt(Math.floor(Number(price) * 1e18));
+
+    logSwarm(`[Manager] Auto-signing negotiated transaction for ${sku} at ${price} KITE...`, requestId);
+
+    // Perform On-Chain Settlement using server signer (acting as Swarm Buyer Agent) sponsored by Paymaster via AA
+    let txHash = "";
+    try {
+      txHash = await settleOrderAA(orderId, totalWei);
+    } catch (aaErr: any) {
+      console.log(`[Manager] Sponsored AA failed for negotiated settle. Falling back to EOA...`);
+      const tx = await withSettlementHealing(
+        async (_attempt, gasMultiplier) => {
+          const overrides: any = { value: totalWei };
+          if (gasMultiplier !== 1) {
+            const fee = await provider.getFeeData();
+            if (fee.gasPrice) overrides.gasPrice = (fee.gasPrice * BigInt(Math.round(gasMultiplier * 100))) / 100n;
+          }
+          const t = await storefront.settleOrder(PASSPORT_ID, orderId, overrides);
+          const r = await t.wait();
+          if (r?.status !== 1) throw new Error(`negotiated settle tx ${t.hash} reverted`);
+          return t;
+        },
+        { agentId: "manager-neg", agentName: "Manager", orderId, sku },
+      );
+      txHash = tx.hash;
+    }
+
+    logSwarm(`[Manager] Negotiated settlement confirmed on-chain: ${txHash}`, requestId);
 
     // Persist completed order to Sanity
     await sanityClient.create({
       _type: "order",
       customerName: "Negotiator Buyer",
       customerEmail: "negotiator@swarm.local",
-      customerWallet: buyerAddress,
+      customerWallet: buyerAddress || lastBuyerAddress || "0x1b4833805b31ac3012297e0c4df7e24261cadc38",
       items: [{
         product: { _type: "reference", _ref: product._id },
         quantity: 1,
@@ -856,9 +933,69 @@ app.post("/api/negotiate-settle", async (req, res) => {
     // Decrement stock
     await sanityClient.patch(product._id).dec({ stock: 1 }).commit();
 
-    res.json({ success: true, orderId });
+    // Update storeStats revenue
+    const stats = await sanityClient.fetch(`*[_type == "storeStats"][0]`);
+    if (stats) {
+      const newTotal = (BigInt(stats.totalRevenueWei || "0") + totalWei).toString();
+      await sanityClient.patch(stats._id).set({ totalRevenueWei: newTotal }).commit();
+    }
+
+    res.json({ success: true, orderId, txHash });
   } catch (err: any) {
     console.error("[Manager] Failed to persist negotiated settlement:", err);
+    res.status(500).json(apiError("INTERNAL_ERROR", err.message));
+  }
+});
+
+app.post("/api/web-settle", async (req, res) => {
+  const { sku, quantity, price, txHash, buyerAddress } = req.body;
+  if (!sku || !price || !txHash || !buyerAddress || !quantity) {
+    return res.status(400).json(apiError("BAD_REQUEST", "Missing required fields"));
+  }
+
+  const requestId = randomUUID();
+  try {
+    const product = await sanityClient.fetch<any>(
+      `*[_type == "product" && sku == $sku][0]{ _id, name, sku, stock }`, { sku }
+    );
+    if (!product) return res.status(404).json(apiError("NOT_FOUND", "Product not found"));
+
+    const orderId = `web-${randomUUID()}`;
+    logSwarm(`[Manager] Web settlement received: ${quantity}x ${sku} at ${price} KITE. Tx: ${txHash}`, requestId);
+
+    // Persist completed order to Sanity
+    await sanityClient.create({
+      _type: "order",
+      customerName: "Web Customer",
+      customerEmail: "web@customer.local",
+      customerWallet: buyerAddress,
+      items: [{
+        product: { _type: "reference", _ref: product._id },
+        quantity: Number(quantity),
+        price: Number(price)
+      }],
+      totalAmount: Number(price) * Number(quantity),
+      status: "fulfilled",
+      agentAssisted: false,
+      onChainOrderId: orderId,
+      transactionHash: txHash
+    });
+
+    // Decrement stock
+    const qtyNum = Number(quantity);
+    await sanityClient.patch(product._id).dec({ stock: qtyNum }).commit();
+
+    // Update storeStats revenue
+    const totalWei = BigInt(Math.floor(Number(price) * qtyNum * 1e18));
+    const stats = await sanityClient.fetch(`*[_type == "storeStats"][0]`);
+    if (stats) {
+      const newTotal = (BigInt(stats.totalRevenueWei || "0") + totalWei).toString();
+      await sanityClient.patch(stats._id).set({ totalRevenueWei: newTotal }).commit();
+    }
+
+    res.json({ success: true, orderId });
+  } catch (err: any) {
+    logSwarm(`[Manager] Web settlement failed: ${err.message}`, requestId);
     res.status(500).json(apiError("INTERNAL_ERROR", err.message));
   }
 });
